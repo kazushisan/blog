@@ -10,6 +10,11 @@ export default tseslint.config(
     ignores: ['dist'],
   },
   eslint.configs.recommended,
+  {
+    rules: {
+      'prefer-template': 'error',
+    },
+  },
   ...tseslint.configs.recommended,
   eslintPluginPrettierRecommended,
 );
