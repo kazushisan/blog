@@ -3,11 +3,8 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Router from "../hooks/Router.bs.js";
-
-var getHref = (e => e.currentTarget.href || '');
-
-var getOrigin = (() => window.location.origin);
-
+var getHref = e => e.currentTarget.href || '';
+var getOrigin = () => window.location.origin;
 function Link(props) {
   var onClick = props.onClick;
   var handleClick = function (e) {
@@ -19,20 +16,9 @@ function Link(props) {
     if (onClick !== undefined) {
       return Curry._1(onClick, e);
     }
-    
   };
-  return React.createElement("a", {
-              className: props.className,
-              href: props.to,
-              onClick: handleClick
-            }, props.children);
+  return <a className={props.className} href={props.to} onClick={handleClick}>{props.children}</a>;
 }
-
 var make = Link;
-
-export {
-  getHref ,
-  getOrigin ,
-  make ,
-}
+export { getHref, getOrigin, make };
 /* react Not a pure module */

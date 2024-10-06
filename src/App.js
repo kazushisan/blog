@@ -9,75 +9,35 @@ import * as Router from "./hooks/Router.bs.js";
 import * as PostList from "./pages/PostList.bs.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import Contentroutes from "content:routes";
-
 function App$Layout(props) {
   var isArticle = props.isArticle;
-  return React.createElement("div", {
-              className: "flex flex-col min-h-screen"
-            }, React.createElement("div", {
-                  className: "flex-none"
-                }, React.createElement(Header.make, {
-                      isArticle: isArticle
-                    })), React.createElement("div", {
-                  className: "flex-auto"
-                }, props.children), React.createElement("div", {
-                  className: "flex-none"
-                }, React.createElement(Footer.make, {
-                      isArticle: isArticle
-                    })));
+  return <div className="flex flex-col min-h-screen"><div className="flex-none"><Header.make isArticle={isArticle} /></div><div className="flex-auto">{props.children}</div><div className="flex-none"><Footer.make isArticle={isArticle} /></div></div>;
 }
-
 var Layout = {
   make: App$Layout
 };
-
 function App(props) {
   var url = Router.useUrl(undefined);
   var path = "/" + Belt_List.toArray(url.path).join("/") + "";
   var target = Contentroutes.find(function (item) {
-        return item.path === path;
-      });
+    return item.path === path;
+  });
   var match = url.path;
   if (target !== undefined) {
     if (match) {
       switch (match.hd) {
-        case "latex" :
-            return React.createElement(App$Layout, {
-                        children: React.createElement(Latex.make, {
-                              path: target.path,
-                              load: target.load
-                            }),
-                        isArticle: true
-                      });
-        case "post" :
-            return React.createElement(App$Layout, {
-                        children: React.createElement(Post.make, {
-                              path: target.path,
-                              load: target.load
-                            }),
-                        isArticle: true
-                      });
+        case "latex":
+          return <App$Layout children={<Latex.make path={target.path} load={target.load} />} isArticle={true} />;
+        case "post":
+          return <App$Layout children={<Post.make path={target.path} load={target.load} />} isArticle={true} />;
         default:
-          
       }
     }
-    
   } else if (!match) {
-    return React.createElement(App$Layout, {
-                children: React.createElement(PostList.make, {}),
-                isArticle: false
-              });
+    return <App$Layout children={<PostList.make />} isArticle={false} />;
   }
-  return React.createElement(App$Layout, {
-              children: "page not found",
-              isArticle: false
-            });
+  return <App$Layout children="page not found" isArticle={false} />;
 }
-
 var make = App;
-
-export {
-  Layout ,
-  make ,
-}
+export { Layout, make };
 /* Post Not a pure module */

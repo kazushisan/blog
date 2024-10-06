@@ -5,21 +5,9 @@ import * as React from "react";
 import * as Router from "./hooks/Router.bs.js";
 import * as Client from "react-dom/client";
 import * as ReactHelmetAsync from "react-helmet-async";
-
 var container = document.querySelector("#root");
-
 if (!(container == null)) {
-  Client.hydrateRoot(container, React.createElement(React.StrictMode, {
-            children: React.createElement(ReactHelmetAsync.HelmetProvider, {
-                  children: React.createElement(Router.Provider.make, {
-                        children: React.createElement(App.make, {})
-                      }),
-                  context: undefined
-                })
-          }));
+  Client.hydrateRoot(container, <React.StrictMode children={<ReactHelmetAsync.HelmetProvider children={<Router.Provider.make children={<App.make />} />} context={undefined} />} />);
 }
-
-export {
-  
-}
+export {};
 /* container Not a pure module */

@@ -4,22 +4,9 @@ import * as App from "./App.bs.js";
 import * as React from "react";
 import * as Router from "./hooks/Router.bs.js";
 import * as ReactHelmetAsync from "react-helmet-async";
-
 function EntryServer(props) {
-  return React.createElement(React.StrictMode, {
-              children: React.createElement(ReactHelmetAsync.HelmetProvider, {
-                    children: React.createElement(Router.Provider.make, {
-                          children: React.createElement(App.make, {}),
-                          serverUrlString: props.serverUrlString
-                        }),
-                    context: props.context
-                  })
-            });
+  return <React.StrictMode children={<ReactHelmetAsync.HelmetProvider children={<Router.Provider.make children={<App.make />} serverUrlString={props.serverUrlString} />} context={props.context} />} />;
 }
-
 var make = EntryServer;
-
-export {
-  make ,
-}
+export { make };
 /* App Not a pure module */

@@ -2,37 +2,19 @@
 
 import * as React from "react";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-
 function formatDateFromIso(value) {
   var date = new Date(value);
   return new Intl.DateTimeFormat("en-US", {
-                dateStyle: "long"
-              }).format(date);
+    dateStyle: "long"
+  }).format(date);
 }
-
 function PostMeta(props) {
   var hash = props.hash;
   var permalink = props.permalink;
-  return React.createElement("div", {
-              className: "text-sm text-slate-500 items-center"
-            }, React.createElement("span", undefined, formatDateFromIso(props.date)), Belt_Option.mapWithDefault(props.modifiedDate, null, (function (d) {
-                    return React.createElement("span", {
-                                className: "before:content-['·'] before:px-1"
-                              }, "last updated " + formatDateFromIso(d) + "");
-                  })), permalink !== undefined && hash !== undefined ? React.createElement(React.Fragment, undefined, React.createElement("span", {
-                        className: "before:content-['·'] before:px-1"
-                      }, "latest commit "), React.createElement("a", {
-                        className: "bg-slate-50 inline- text-sm text-slate-700 inline-block border-slate-200 border rounded-sm px-1 font-mono ml-1 align-top",
-                        href: permalink,
-                        rel: "noreferrer",
-                        target: "_blank"
-                      }, hash.slice(0, 7))) : null);
+  return <div className="text-sm text-slate-500 items-center"><span>{formatDateFromIso(props.date)}</span>{Belt_Option.mapWithDefault(props.modifiedDate, null, function (d) {
+      return <span className="before:content-['·'] before:px-1">{"last updated " + formatDateFromIso(d) + ""}</span>;
+    })}{permalink !== undefined && hash !== undefined ? <React.Fragment><span className="before:content-['·'] before:px-1">latest commit </span><a className="bg-slate-50 inline- text-sm text-slate-700 inline-block border-slate-200 border rounded-sm px-1 font-mono ml-1 align-top" href={permalink} rel="noreferrer" target="_blank">{hash.slice(0, 7)}</a></React.Fragment> : null}</div>;
 }
-
 var make = PostMeta;
-
-export {
-  formatDateFromIso ,
-  make ,
-}
+export { formatDateFromIso, make };
 /* react Not a pure module */

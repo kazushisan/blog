@@ -2,35 +2,9 @@
 
 import * as Link from "./Link.bs.js";
 import * as React from "react";
-
 function Header(props) {
-  return React.createElement("header", undefined, React.createElement("div", {
-                  className: "container md:mx-auto max-w-4xl box-content " + (
-                    props.isArticle ? "xl:pr-72" : ""
-                  ) + ""
-                }, React.createElement("div", {
-                      className: "p-4 flex justify-start items-center"
-                    }, React.createElement(Link.make, {
-                          children: React.createElement("h1", {
-                                className: "font-bold text-lg"
-                              }, "gadgetlunatic"),
-                          to: "/"
-                        }), React.createElement(Link.make, {
-                          children: "ブログ",
-                          to: "/",
-                          className: "text-slate-700 ml-4 text-sm"
-                        }), React.createElement("div", {
-                          className: "text-slate-300 mx-1 text-sm"
-                        }, "/"), React.createElement(Link.make, {
-                          children: "LaTeXのガイド",
-                          to: "/latex/introduction",
-                          className: "text-slate-700 text-sm"
-                        }))));
+  return <header><div className={"container md:mx-auto max-w-4xl box-content " + (props.isArticle ? "xl:pr-72" : "") + ""}><div className="p-4 flex justify-start items-center"><Link.make children={<h1 className="font-bold text-lg">gadgetlunatic</h1>} to="/" /><Link.make children="ブログ" to="/" className="text-slate-700 ml-4 text-sm" /><div className="text-slate-300 mx-1 text-sm">/</div><Link.make children="LaTeXのガイド" to="/latex/introduction" className="text-slate-700 text-sm" /></div></div></header>;
 }
-
 var make = Header;
-
-export {
-  make ,
-}
+export { make };
 /* Link Not a pure module */

@@ -2,19 +2,9 @@
 
 import * as React from "react";
 import * as ReactHelmetAsync from "react-helmet-async";
-
 function Head(props) {
-  return React.createElement(ReactHelmetAsync.Helmet, {
-              children: null
-            }, React.createElement("title", undefined, props.title), React.createElement("link", {
-                  href: "https://gadgetlunatic.com" + props.path + "",
-                  rel: "canonical"
-                }));
+  return <ReactHelmetAsync.Helmet children={null}><title>{props.title}</title><link href={"https://gadgetlunatic.com" + props.path + ""} rel="canonical" /></ReactHelmetAsync.Helmet>;
 }
-
 var make = Head;
-
-export {
-  make ,
-}
+export { make };
 /* react Not a pure module */
