@@ -1,28 +1,42 @@
 import { createElement } from 'react';
-let postList = null;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let postList: any = null;
+
 export const useLazyPostList = () => {
   if (postList) {
     return postList;
   }
+
   throw import('content:postList').then((imported) => {
     postList = imported.default;
   });
 };
-let latexList = null;
+
+// fixme
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let latexList: any = null;
+
 export const useLazyLatexList = () => {
   if (latexList) {
     return latexList;
   }
+
   throw import('content:latexList').then((imported) => {
     latexList = imported.default;
   });
 };
+
 const loaded = new Map();
-export const useLazyPage = (path, load) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useLazyPage = (path: string, load: () => Promise<any>) => {
   const page = loaded.get(path);
+
   if (page) {
     return page;
   }
+
   throw load().then((value) => {
     if (typeof value.title === 'undefined') {
       throw new Error(`title not found for ${path}`);
