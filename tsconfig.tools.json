@@ -5,6 +5,7 @@
     "target": "es2022",
     "useDefineForClassFields": true,
     "lib": ["es2023"],
+    "types": ["node"],
     "module": "NodeNext",
     "skipLibCheck": true,
     "strict": true,
