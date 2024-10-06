@@ -10,11 +10,12 @@ export default tseslint.config(
     ignores: ['dist'],
   },
   eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  eslintPluginPrettierRecommended,
   {
     rules: {
       'prefer-template': 'error',
+      'arrow-body-style': ['error', 'as-needed'],
     },
   },
-  ...tseslint.configs.recommended,
-  eslintPluginPrettierRecommended,
 );
