@@ -1,22 +1,14 @@
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'node:stream';
+import { PluginOption } from 'vite';
 
-/**
- * @param {string} code
- * @returns {Module}
- */
-const executeCode = (code) =>
+const executeCode = (code: string) =>
   import(`data:text/javascript,${encodeURIComponent(code)}`);
 
-/**
- * @returns {import('vite').PluginOption}
- */
 function sitemap() {
   return {
     name: 'sitemap',
-    apply: (_, env) => {
-      return !env.ssrBuild && env.command === 'build';
-    },
+    apply: (_, env) => !env.isSsrBuild && env.command === 'build',
     async buildStart() {
       const stream = new SitemapStream({
         hostname: 'https://gadgetlunatic.com',
@@ -34,12 +26,14 @@ function sitemap() {
 
           const loaded = await this.load(resolution);
 
-          const data = (await executeCode(loaded.code)).default;
+          const data = (await executeCode(loaded.code || '')).default;
 
-          const list = data.map((item) => ({
-            url: item.path,
-            lastmod: item.modifiedDate || item.date,
-          }));
+          const list = data.map(
+            (item: { path: string; date: string; modifiedDate?: string }) => ({
+              url: item.path,
+              lastmod: item.modifiedDate || item.date,
+            }),
+          );
 
           const readable = Readable.from(list);
 
@@ -61,7 +55,7 @@ function sitemap() {
         source,
       });
     },
-  };
+  } satisfies PluginOption;
 }
 
 export default sitemap;

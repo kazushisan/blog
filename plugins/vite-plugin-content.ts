@@ -3,6 +3,8 @@ import { globSync } from 'glob';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import stringifyObject from 'stringify-object';
+import { PluginOption } from 'vite';
+import type { PluginContext } from 'rollup';
 
 const prefix = 'content:';
 const internalPrefix = 'content-internal:';
@@ -10,10 +12,7 @@ const internalPrefix = 'content-internal:';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
 
-/**
- * @param {{ path: string, file: string}[]} routes
- */
-const generateExportCode = (routes) =>
+const generateExportCode = (routes: { path: string; file: string }[]) =>
   toJs({
     type: 'Program',
     body: [
@@ -75,11 +74,7 @@ const generateExportCode = (routes) =>
     sourceType: 'module',
   }).value;
 
-/**
- * @this {import('rollup').PluginContext}
- * @param {string} file
- */
-async function extractFromFile(file) {
+async function extractFromFile(this: PluginContext, file: string) {
   const resolution = await this.resolve(file, undefined, {
     skipSelf: true,
   });
@@ -93,7 +88,7 @@ async function extractFromFile(file) {
   // node.js will throw an error when it tries to execute import statements in data uri code
   // because it will fail to resolve the module.
   // for now, removing the import statement will avoid throwing errors.
-  const modified = loaded.code.replaceAll(/^(import\s.+;)$/gm, '');
+  const modified = loaded.code?.replaceAll(/^(import\s.+;)$/gm, '') || '';
 
   const executed = await import(
     `data:text/javascript,${encodeURIComponent(modified)}`
@@ -105,11 +100,7 @@ async function extractFromFile(file) {
   };
 }
 
-/**
- * @param {{ query: { [list: string]: string }}} config
- * @returns {import('vite').PluginOption}
- */
-function content(config) {
+function content(config: { query: { [list: string]: string } }) {
   let serve = false;
 
   return {
@@ -139,7 +130,7 @@ function content(config) {
           return null;
         }
 
-        return resolve(projectRoot, config.query[target]);
+        return resolve(projectRoot, config.query[target] || '');
       }
 
       return null;
@@ -184,13 +175,13 @@ function content(config) {
       );
 
       const { default: query } = await import(
-        resolve(projectRoot, config.query[target])
+        resolve(projectRoot, config.query[target] || '')
       );
       const result = query(list);
 
       return `export default ${stringifyObject(result)}`;
     },
-  };
+  } satisfies PluginOption;
 }
 
 export default content;

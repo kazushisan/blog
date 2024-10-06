@@ -7,15 +7,16 @@ import remarkMath from 'remark-math';
 import stringifyObject from 'stringify-object';
 import { VFile } from 'vfile';
 import rehypeMdxHeadings from 'rehype-mdx-headings';
-import rehypeHighlightCode from './rehype-highlight-code';
+import rehypeHighlightCode from './rehype-highlight-code.js';
 import rehypeHeadingAnchor from 'rehype-heading-anchor';
-import rehypeImage from './rehype-image';
+import rehypeImage from './rehype-image.js';
 import { execSync } from 'child_process';
 import { relative } from 'path';
 import { cwd } from 'process';
 import yaml from 'js-yaml';
+import { PluginOption } from 'vite';
 
-function namedExports(data) {
+function namedExports(data: { [key: string]: unknown }) {
   return Object.entries(data).reduce(
     (acc, [key, value]) =>
       `${acc}export const ${key} = ${stringifyObject(value)};\n`,
@@ -38,7 +39,7 @@ function mdx() {
       const { data, content } = matter(value, {
         engines: {
           // specify engine with option to prevent date from being converted to Date instance with timezone info dropped
-          yaml: (s) => yaml.load(s, { schema: yaml.JSON_SCHEMA }),
+          yaml: (s) => yaml.load(s, { schema: yaml.JSON_SCHEMA }) as object,
         },
       });
 
@@ -81,7 +82,7 @@ function mdx() {
         modifiedDate,
       })}${result.toString()}`;
     },
-  };
+  } satisfies PluginOption;
 }
 
 export default mdx;
