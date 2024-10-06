@@ -4,10 +4,10 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    files: ["**/*.{js,ts,jsx,tsx}"],
+    files: ['**/*.{js,ts,jsx,tsx}'],
   },
   {
-    ignores: ["dist"],
+    ignores: ['dist'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

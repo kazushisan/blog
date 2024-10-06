@@ -4,7 +4,7 @@ export const useLazyPostList = () => {
   if (postList) {
     return postList;
   }
-  throw import('content:postList').then(imported => {
+  throw import('content:postList').then((imported) => {
     postList = imported.default;
   });
 };
@@ -13,7 +13,7 @@ export const useLazyLatexList = () => {
   if (latexList) {
     return latexList;
   }
-  throw import('content:latexList').then(imported => {
+  throw import('content:latexList').then((imported) => {
     latexList = imported.default;
   });
 };
@@ -23,7 +23,7 @@ export const useLazyPage = (path, load) => {
   if (page) {
     return page;
   }
-  throw load().then(value => {
+  throw load().then((value) => {
     if (typeof value.title === 'undefined') {
       throw new Error(`title not found for ${path}`);
     }
@@ -39,7 +39,7 @@ export const useLazyPage = (path, load) => {
       hash: value.hash,
       weight: value.weight || 0,
       headings: value.headings,
-      element: createElement(value.default)
+      element: createElement(value.default),
     });
   });
 };
