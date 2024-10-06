@@ -6,6 +6,9 @@ export default tseslint.config(
   {
     files: ["**/*.{js,ts,jsx,tsx}"],
   },
+  {
+    ignores: ["dist"],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   eslintPluginPrettierRecommended,
