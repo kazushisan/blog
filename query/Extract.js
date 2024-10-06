@@ -12,10 +12,10 @@ function extract(param) {
   var path = param.path;
   var data = param.data;
   if (data.title === undefined) {
-    Js_exn.raiseError('invalid data for ' + path + '');
+    Js_exn.raiseError(`invalid data for ${path}`);
   }
   if (data.date === undefined) {
-    Js_exn.raiseError('invalid data for ' + path + '');
+    Js_exn.raiseError(`invalid data for ${path}`);
   }
   return {
     path: path,

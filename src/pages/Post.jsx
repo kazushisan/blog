@@ -11,7 +11,7 @@ function Post(props) {
   var title = match.title;
   return (
     <div className="xl:flex xl:justify-center">
-      <Head.make title={'' + title + ' | gadgetlunatic'} path={path} />
+      <Head.make title={`${title} | gadgetlunatic`} path={path} />
       <div className="container md:mx-auto xl:mx-0 max-w-4xl box-content flex-none">
         <div className="px-4">
           <header>

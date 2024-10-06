@@ -19,7 +19,7 @@ function getPosition(element) {
 function getHeadingElements(headings) {
   var selector = headings
     .map(function (heading) {
-      return '#' + heading.id + '';
+      return `#${heading.id}`;
     })
     .join(',');
   return Array.from(document.querySelectorAll(selector));
@@ -63,7 +63,7 @@ function useTableOfContentsActiveItem(headings) {
         }
       });
       headings.forEach(function (param) {
-        var element = $$Document.getElementById(document, '' + param.id + '');
+        var element = $$Document.getElementById(document, `${param.id}`);
         var sibling = Belt_Option.mapWithDefault(
           Belt_Option.mapWithDefault(
             element,
@@ -110,19 +110,17 @@ function TableOfContents(props) {
           return (
             <li
               key={heading.id}
-              className={
-                'list-none px-2 py-1 my-1 block text-sm ' +
-                (match !== 2
+              className={`list-none px-2 py-1 my-1 block text-sm ${
+                match !== 2
                   ? match$1
                     ? 'bg-blue-100 text-blue-500 rounded ml-2 font-bold'
                     : 'text-slate-700 ml-2'
                   : match$1
                     ? 'bg-blue-100 text-blue-500 rounded font-bold'
-                    : 'text-slate-700') +
-                ''
-              }
+                    : 'text-slate-700'
+              }`}
             >
-              <a href={'#' + heading.id + ''}>{heading.value}</a>
+              <a href={`#${heading.id}`}>{heading.value}</a>
             </li>
           );
         })}

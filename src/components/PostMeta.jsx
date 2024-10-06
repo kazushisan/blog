@@ -17,7 +17,7 @@ function PostMeta(props) {
       {Belt_Option.mapWithDefault(props.modifiedDate, null, function (d) {
         return (
           <span className="before:content-['·'] before:px-1">
-            {'last updated ' + formatDateFromIso(d) + ''}
+            {`last updated ${formatDateFromIso(d)}`}
           </span>
         );
       })}

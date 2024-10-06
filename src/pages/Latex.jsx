@@ -19,10 +19,7 @@ function Latex(props) {
   var setShow = match$1[1];
   return (
     <div className="xl:flex xl:justify-center">
-      <Head.make
-        title={'LaTeXのガイド ' + title + ' | gadgetlunatic'}
-        path={path}
-      />
+      <Head.make title={`LaTeXのガイド ${title} | gadgetlunatic`} path={path} />
       <div>
         <div className="container md:mx-auto max-w-4xl xl:hidden">
           <div className="p-4 flex justify-between">
@@ -63,13 +60,9 @@ function Latex(props) {
                   return (
                     <div
                       key={page.path}
-                      className={
-                        '' +
-                        (path === page.path
-                          ? 'text-blue-500'
-                          : 'text-slate-700') +
-                        ' my-4'
-                      }
+                      className={`${
+                        path === page.path ? 'text-blue-500' : 'text-slate-700'
+                      } my-4`}
                     >
                       <Link.make
                         children={page.title}
@@ -114,11 +107,9 @@ function Latex(props) {
               return (
                 <div
                   key={page.path}
-                  className={
-                    '' +
-                    (path === page.path ? 'text-blue-500' : 'text-slate-700') +
-                    ' my-2'
-                  }
+                  className={`${
+                    path === page.path ? 'text-blue-500' : 'text-slate-700'
+                  } my-2`}
                 >
                   <Link.make
                     children={page.title}

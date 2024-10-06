@@ -28,7 +28,7 @@ var Layout = {
 };
 function App(props) {
   var url = Router.useUrl(undefined);
-  var path = '/' + Belt_List.toArray(url.path).join('/') + '';
+  var path = `/${Belt_List.toArray(url.path).join('/')}`;
   var target = Contentroutes.find(function (item) {
     return item.path === path;
   });

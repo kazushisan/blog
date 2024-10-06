@@ -6,11 +6,9 @@ function Header(props) {
   return (
     <header>
       <div
-        className={
-          'container md:mx-auto max-w-4xl box-content ' +
-          (props.isArticle ? 'xl:pr-72' : '') +
-          ''
-        }
+        className={`container md:mx-auto max-w-4xl box-content ${
+          props.isArticle ? 'xl:pr-72' : ''
+        }`}
       >
         <div className="p-4 flex justify-start items-center">
           <Link.make

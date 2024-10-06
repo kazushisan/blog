@@ -6,11 +6,9 @@ function Footer(props) {
   return (
     <footer>
       <div
-        className={
-          'container md:mx-auto max-w-4xl box-content py-16 ' +
-          (props.isArticle ? 'xl:pr-72' : '') +
-          ''
-        }
+        className={`container md:mx-auto max-w-4xl box-content py-16 ${
+          props.isArticle ? 'xl:pr-72' : ''
+        }`}
       >
         <div className="p-4">
           <div>
@@ -23,7 +21,7 @@ function Footer(props) {
           </div>
           <div className="mt-4">
             <p>
-              {'© ' + year + ' '}
+              {`© ${year} `}
               <a
                 className="text-blue-500 hover:text-blue"
                 href="https://twitter.com/kazushikonosu"

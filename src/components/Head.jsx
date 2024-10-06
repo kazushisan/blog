@@ -6,10 +6,7 @@ function Head(props) {
   return (
     <ReactHelmetAsync.Helmet children={null}>
       <title>{props.title}</title>
-      <link
-        href={'https://gadgetlunatic.com' + props.path + ''}
-        rel="canonical"
-      />
+      <link href={`https://gadgetlunatic.com${props.path}`} rel="canonical" />
     </ReactHelmetAsync.Helmet>
   );
 }
