@@ -1,3 +1,4 @@
+/*global console*/
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -31,7 +32,7 @@ async function createServer() {
       const [header, footer] = transformed.split('<!--ssr-outlet-->');
 
       const { make: ServerRoot } = await vite.ssrLoadModule(
-        'src/EntryServer.bs.js',
+        'src/serverRenderer.js',
       );
 
       const context = {};

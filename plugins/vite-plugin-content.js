@@ -13,8 +13,8 @@ const projectRoot = resolve(__dirname, '../');
 /**
  * @param {{ path: string, file: string}[]} routes
  */
-const generateExportCode = (routes) => {
-  return toJs({
+const generateExportCode = (routes) =>
+  toJs({
     type: 'Program',
     body: [
       {
@@ -74,7 +74,6 @@ const generateExportCode = (routes) => {
     ],
     sourceType: 'module',
   }).value;
-};
 
 /**
  * @this {import('rollup').PluginContext}

@@ -1,3 +1,4 @@
+/*global console*/
 import { globSync } from 'glob';
 import { build } from 'vite';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -21,7 +22,7 @@ await build({
 await build({
   build: {
     outDir: 'dist/server',
-    ssr: 'src/EntryServer.bs.js',
+    ssr: 'src/serverRenderer.tsx',
   },
 });
 
@@ -42,7 +43,7 @@ const template = await readFile(
 );
 const [header, footer] = template.split('<!--ssr-outlet-->');
 
-const { make: ServerRoot } = await import('../dist/server/EntryServer.bs.js');
+const { make: ServerRoot } = await import('../dist/server/serverRenderer.js');
 
 const promises = routes.map(async (route) => {
   const passThrough = new PassThrough();
