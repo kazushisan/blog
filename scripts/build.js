@@ -1,4 +1,4 @@
-/*global console*/
+/*global console, Response*/
 import { globSync } from 'glob';
 import { build } from 'vite';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
