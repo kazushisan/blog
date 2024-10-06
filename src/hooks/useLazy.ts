@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let postList: any = null;
+let postList: any[] | null = null;
 
 export const useLazyPostList = () => {
   if (postList) {
@@ -15,7 +15,7 @@ export const useLazyPostList = () => {
 
 // fixme
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let latexList: any = null;
+let latexList: any[] | null = null;
 
 export const useLazyLatexList = () => {
   if (latexList) {

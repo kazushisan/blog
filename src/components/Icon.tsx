@@ -1,4 +1,4 @@
-export const Bar = ({ className }: { className?: string }) => (
+export const Bar3 = ({ className }: { className?: string }) => (
   <svg
     className={className}
     fill="none"
