@@ -4,7 +4,7 @@ import { createElement, ReactElement } from 'react';
 
 let postList: PostListItem[] | null = null;
 
-export const useLazyPostList = () => {
+export const useLazyPosts = () => {
   if (postList) {
     return postList;
   }
@@ -19,7 +19,7 @@ const loaded = new Map<
   Omit<ProcessedPost, 'default' | 'path'> & { element: ReactElement }
 >();
 
-export const useLazyPage = (
+export const useLazyPost = (
   path: string,
   load: () => Promise<ProcessedPost>,
 ) => {

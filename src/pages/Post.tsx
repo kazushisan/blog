@@ -2,7 +2,7 @@ import { ProcessedPost } from 'content:routes';
 import { Head } from '../components/Head';
 import { PostMeta } from '../components/PostMeta';
 import { TableOfContents } from '../components/TableOfContents';
-import { useLazyPage } from '../hooks/useLazy';
+import { useLazyPost } from '../hooks/useLazy';
 
 export const Post = ({
   path,
@@ -11,8 +11,8 @@ export const Post = ({
   path: string;
   load: () => Promise<ProcessedPost>;
 }) => {
-  const match = useLazyPage(path, load);
-  const title = match.title;
+  const post = useLazyPost(path, load);
+  const title = post.title;
 
   return (
     <div className="xl:flex xl:justify-center">
@@ -23,21 +23,21 @@ export const Post = ({
             <h1 className="font-bold text-3xl my-8">{title}</h1>
             <div className="my-8">
               <PostMeta
-                date={match.date}
-                permalink={match.permalink}
-                modifiedDate={match.modifiedDate}
-                hash={match.hash}
+                date={post.date}
+                permalink={post.permalink}
+                modifiedDate={post.modifiedDate}
+                hash={post.hash}
               />
             </div>
           </header>
           <article className="prose mb-16 max-w-none prose-slate">
-            {match.element}
+            {post.element}
           </article>
         </div>
       </div>
       <div className="hidden xl:block flex-none w-72">
         <div className="p-4 sticky mt-40 top-40">
-          <TableOfContents headings={match.headings} />
+          <TableOfContents headings={post.headings} />
         </div>
       </div>
     </div>
