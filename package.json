@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/server.js",
-    "build": "node scripts/build.js",
+    "dev": "tsx scripts/server.ts",
+    "build": "tsx scripts/build.ts",
     "lint": "eslint"
   },
   "author": "Kazushi Konosu",
@@ -15,6 +15,7 @@
     "@eslint/js": "^9.12.0",
     "@mdx-js/mdx": "^2.3.0",
     "@tailwindcss/typography": "^0.5.9",
+    "@types/express": "^5.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.11",

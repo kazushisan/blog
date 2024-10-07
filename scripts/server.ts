@@ -33,7 +33,8 @@ async function createServer() {
 
       const { render } = await vite.ssrLoadModule('src/serverRenderer.tsx');
 
-      const context = {};
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const context: any = {};
 
       const stream = renderToPipeableStream(render({ path, context }), {
         onShellReady() {
