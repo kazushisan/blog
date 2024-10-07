@@ -17,13 +17,13 @@ export const PostList = () => {
               className="mt-8 pt-8 first-of-type:border-t-0 border-t border-slate-100"
             >
               <Link to={post.path}>
-                <h1 className="font-bold text-xl mb-4">{post.title}</h1>
+                <h1 className="font-bold text-xl mb-4">{post.data.title}</h1>
               </Link>
               <PostMeta
-                date={post.date}
-                permalink={post.permalink}
-                modifiedDate={post.modifiedDate}
-                hash={post.hash}
+                date={post.data.date}
+                permalink={post.data.permalink}
+                modifiedDate={post.data.modifiedDate}
+                hash={post.data.hash}
               />
             </div>
           ))}
