@@ -24,6 +24,7 @@ async function createServer() {
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl;
+    const path = req.path;
 
     try {
       const transformed = await vite.transformIndexHtml(url, template);
@@ -34,7 +35,7 @@ async function createServer() {
 
       const context = {};
 
-      const stream = renderToPipeableStream(render({ url, context }), {
+      const stream = renderToPipeableStream(render({ path, context }), {
         onShellReady() {
           res.status(200).set({ 'Content-Type': 'text/html' });
           res.write(

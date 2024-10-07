@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { useUrl } from './utils/router';
+import { usePath } from './utils/router';
 import ContentRoutes from 'content:routes';
 import { Post } from './pages/Post';
 import { Latex } from './pages/Latex';
@@ -26,12 +26,10 @@ const Layout = ({
 );
 
 export const App = () => {
-  const url = useUrl();
-  const path = url;
+  const path = usePath();
   const target = ContentRoutes.find((item) => item.path === path);
-  const match = target;
 
-  if (match) {
+  if (target) {
     if (path.startsWith('/latex')) {
       return (
         <Layout
@@ -49,6 +47,7 @@ export const App = () => {
       );
     }
   }
+  console.log({ path, result: path === '/' });
 
   if (path === '/') {
     return <Layout children={<PostList />} isArticle={false} />;

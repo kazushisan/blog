@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  startTransition,
   useCallback,
   useContext,
   useEffect,
@@ -8,8 +9,8 @@ import {
 } from 'react';
 
 const Router = createContext<{
-  url: string;
-  setUrl: (url: string) => void;
+  path: string;
+  setPath: (path: string) => void;
 } | null>(null);
 
 export const useNavigate = () => {
@@ -19,9 +20,10 @@ export const useNavigate = () => {
     throw new Error('useNavigate must be used within a Router');
   }
 
-  const navigate = useCallback((url: string) => {
-    window.history.pushState({}, '', url);
-    context.setUrl(url);
+  const navigate = useCallback((path: string) => {
+    window.history.pushState({}, '', path);
+
+    startTransition(() => context.setPath(path));
   }, []);
 
   return navigate;
@@ -30,21 +32,21 @@ export const useNavigate = () => {
 const noop = () => void 0;
 
 export const ServerRouter = ({
-  url,
+  path,
   children,
 }: {
-  url: string;
+  path: string;
   children: ReactNode;
 }) => (
-  <Router.Provider value={{ url, setUrl: noop }}>{children}</Router.Provider>
+  <Router.Provider value={{ path, setPath: noop }}>{children}</Router.Provider>
 );
 
 export const ClientRouter = ({ children }: { children: ReactNode }) => {
-  const [url, setUrl] = useState(window.location.pathname);
+  const [path, setPath] = useState(window.location.pathname);
 
   useEffect(() => {
     const handlePopState = () => {
-      setUrl(window.location.pathname);
+      startTransition(() => setPath(window.location.pathname));
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -52,15 +54,17 @@ export const ClientRouter = ({ children }: { children: ReactNode }) => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  return <Router.Provider value={{ url, setUrl }}>{children}</Router.Provider>;
+  return (
+    <Router.Provider value={{ path, setPath }}>{children}</Router.Provider>
+  );
 };
 
-export const useUrl = () => {
+export const usePath = () => {
   const context = useContext(Router);
 
   if (!context) {
-    throw new Error('useUrl must be used within a Router');
+    throw new Error('usePath must be used within a Router');
   }
 
-  return context.url;
+  return context.path;
 };

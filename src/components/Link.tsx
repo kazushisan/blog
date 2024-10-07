@@ -3,13 +3,29 @@
 import { MouseEvent, ReactNode, useCallback } from 'react';
 import { useNavigate } from '../utils/router';
 
-const isInternal = (href: string) => {
+const getInternalPath = (href: string) => {
   if (href.startsWith('/')) {
-    return true;
+    const result = {
+      isInternal: true,
+      path: href,
+    } as const;
+
+    return result;
   }
 
   const url = new URL(href);
-  return url.origin === window.location.origin;
+  const isInternal = url.origin === window.location.origin;
+
+  if (isInternal) {
+    const result = {
+      isInternal: true,
+      path: url.pathname,
+    } as const;
+
+    return result;
+  }
+
+  return { isInternal: false } as const;
 };
 
 export const Link = ({
@@ -27,9 +43,10 @@ export const Link = ({
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLAnchorElement>) => {
-      if (isInternal(e.currentTarget.href)) {
+      const result = getInternalPath(e.currentTarget.href);
+      if (result.isInternal) {
         e.preventDefault();
-        navigate(e.currentTarget.href);
+        navigate(result.path);
       }
       onClick?.(e);
     },
