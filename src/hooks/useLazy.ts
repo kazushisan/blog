@@ -1,5 +1,6 @@
+import { PostListItem } from 'content:posts';
+import { ProcessedPost } from 'content:routes';
 import { createElement, ReactElement } from 'react';
-import { ProcessedPost, PostListItem } from '../types';
 
 let postList: PostListItem[] | null = null;
 

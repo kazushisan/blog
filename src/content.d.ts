@@ -1,5 +1,12 @@
 declare module 'content:posts' {
-  import { PostListItem } from './types/Heading';
+  export interface PostListItem {
+    title: string;
+    date: string;
+    hash: string | undefined;
+    permalink: string | undefined;
+    modifiedDate: string | undefined;
+    path: string;
+  }
 
   const posts: PostListItem[];
 
@@ -7,13 +14,18 @@ declare module 'content:posts' {
 }
 
 declare module 'content:routes' {
-  import { ProcessedPost } from './types';
+  import { PostListItem } from 'content:posts';
 
   const routes: {
     path: string;
     file: string;
     load: () => Promise<ProcessedPost>;
   }[];
+
+  export interface ProcessedPost extends PostListItem {
+    headings: { id: string; value: string; level: number; depth: number }[];
+    default: React.ComponentType;
+  }
 
   export default routes;
 }

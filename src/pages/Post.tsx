@@ -1,8 +1,8 @@
+import { ProcessedPost } from 'content:routes';
 import { Head } from '../components/Head';
 import { PostMeta } from '../components/PostMeta';
 import { TableOfContents } from '../components/TableOfContents';
 import { useLazyPage } from '../hooks/useLazy';
-import { ProcessedPost } from '../types';
 
 export const Post = ({
   path,
