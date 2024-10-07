@@ -1,14 +1,4 @@
-export const extract = (param: {
-  path: string;
-  data: {
-    title?: string;
-    date?: string;
-    permalink: string;
-    modifiedDate: string;
-    hash: string;
-    weight?: number;
-  };
-}) => {
+export const extract = (param) => {
   const path = param.path;
   const data = param.data;
   if (data.title === undefined) {

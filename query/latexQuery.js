@@ -1,22 +1,6 @@
 import { extract } from './extract.js';
 
-const query = (
-  list: {
-    path: string;
-    weight?: number;
-    title: string;
-    date: string;
-    modifiedDate: string;
-    data: {
-      title?: string;
-      date?: string;
-      permalink: string;
-      modifiedDate: string;
-      hash: string;
-      weight?: number;
-    };
-  }[],
-) =>
+const query = (list) =>
   list
     .map(extract)
     .filter((item) => item.path.startsWith('/latex'))
