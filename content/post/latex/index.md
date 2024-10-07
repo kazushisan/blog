@@ -28,11 +28,11 @@ Linuxでは、各ディストリビューションのパッケージマネージ
 
 #### TeX関連のパッケージをpacmanの管理下から除外する
 
-パッケージマネージャとTeX Liveが干渉してしまうため、TeX関連のパッケージについてはOSのパッケージマネージャに管理されないようにする必要があります。[TeX Wiki](https://texwiki.texjp.org/?texlive-dummy#archlinux)によると、
+パッケージマネージャとTeX Liveが干渉してしまうため、TeX関連のパッケージについてはOSのパッケージマネージャに管理されないようにする必要があります。[TeX Wiki](https://texwiki.texjp.org/?texlive-dummy#archlinux)には、dummyパッケージを導入することによってTeX関連のパッケージがpacmanに管理されないようにする方法が紹介されています。
 
 > Linux で TeX Live 公式パッケージをインストールした場合は TeX Live に依存するパッケージによって各種 Linux ディストリビューションが提供している TeX Live がインストールされないように TeX Live の dummy パッケージをインストールします。
 
-dummyパッケージを導入することによってTeX関連のパッケージがpacmanに管理されないようにする方法が紹介されています。dummyパッケージについてはあまりスマートな解決方法ではないため、議論の結果現在はAURから削除されているようです。そこで、`pacman --assume-installed`を使って解決しました。
+dummyパッケージについてはあまりスマートな解決方法ではないため、議論の結果現在はAURから削除されているようです。そこで、`pacman --assume-installed`を使って解決しました。
 
 [texlive-dummyのソースコード](https://github.com/zhou13/aur/blob/master/texlive-dummy/PKGBUILD)を見てみると、
 
@@ -98,7 +98,7 @@ sudo tlmgr update --self -all
 sudo tlmgr install collection-langjapanese
 ```
 
-### TeX Live Manager `tlmgr` を使う
+### TeX Live Managerを使う
 
 インストールが完了すると、TeXで使うパッケージの管理ツール`tlmgr`使えるようになります。これによって、パッケージの追加やアップデートが実行できまうs。
 
