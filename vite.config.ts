@@ -6,15 +6,5 @@ import sitemap from './plugins/vite-plugin-sitemap.js';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    mdx(),
-    content({
-      query: {
-        postList: './query/postQuery.js',
-        latexList: './query/latexQuery.js',
-      },
-    }),
-    sitemap(),
-  ],
+  plugins: [react(), mdx(), content(), sitemap()],
 });

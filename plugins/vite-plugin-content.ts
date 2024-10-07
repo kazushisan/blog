@@ -100,7 +100,7 @@ async function extractFromFile(this: PluginContext, file: string) {
   };
 }
 
-function content(config: { query: { [list: string]: string } }) {
+function content() {
   let serve = false;
 
   return {
@@ -113,24 +113,12 @@ function content(config: { query: { [list: string]: string } }) {
         return `\0${source}`;
       }
 
-      if (source.startsWith(prefix)) {
-        const target = source.slice(prefix.length);
-
-        if (!Object.keys(config.query).includes(target)) {
-          return null;
-        }
-
+      if (source === `${prefix}posts`) {
         return `\0${source}`;
       }
 
-      if (source.startsWith(internalPrefix)) {
-        const target = source.slice(internalPrefix.length);
-
-        if (!Object.keys(config.query).includes(target)) {
-          return null;
-        }
-
-        return resolve(projectRoot, config.query[target] || '');
+      if (source === `${internalPrefix}posts`) {
+        return resolve(projectRoot, './plugins/posts.js');
       }
 
       return null;
@@ -153,7 +141,7 @@ function content(config: { query: { [list: string]: string } }) {
         return generateExportCode(routes);
       }
 
-      if (!Object.keys(config.query).includes(target)) {
+      if (target !== 'posts') {
         return null;
       }
 
@@ -175,7 +163,7 @@ function content(config: { query: { [list: string]: string } }) {
       );
 
       const { default: query } = await import(
-        resolve(projectRoot, config.query[target] || '')
+        resolve(projectRoot, './plugins/posts.js')
       );
       const result = query(list);
 

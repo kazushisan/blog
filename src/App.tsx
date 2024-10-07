@@ -30,24 +30,13 @@ export const App = () => {
   const target = ContentRoutes.find((item) => item.path === path);
 
   if (target) {
-    if (path.startsWith('/latex')) {
-      return (
-        <Layout
-          children={<Latex path={target.path} load={target.load} />}
-          isArticle={true}
-        />
-      );
-    }
-    if (path.startsWith('/post')) {
-      return (
-        <Layout
-          children={<Post path={target.path} load={target.load} />}
-          isArticle={true}
-        />
-      );
-    }
+    return (
+      <Layout
+        children={<Post path={target.path} load={target.load} />}
+        isArticle={true}
+      />
+    );
   }
-  console.log({ path, result: path === '/' });
 
   if (path === '/') {
     return <Layout children={<PostList />} isArticle={false} />;

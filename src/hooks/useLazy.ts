@@ -8,22 +8,8 @@ export const useLazyPostList = () => {
     return postList;
   }
 
-  throw import('content:postList').then((imported) => {
+  throw import('content:posts').then((imported) => {
     postList = imported.default;
-  });
-};
-
-// fixme
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let latexList: any[] | null = null;
-
-export const useLazyLatexList = () => {
-  if (latexList) {
-    return latexList;
-  }
-
-  throw import('content:latexList').then((imported) => {
-    latexList = imported.default;
   });
 };
 
