@@ -1,5 +1,5 @@
 ---
-title: 'LaTexを使う'
+title: 'LaTeXを使う'
 date: 2018-12-22T12:01:02+09:00
 ---
 
