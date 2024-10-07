@@ -2,14 +2,14 @@ import { Head } from '../components/Head';
 import { PostMeta } from '../components/PostMeta';
 import { TableOfContents } from '../components/TableOfContents';
 import { useLazyPage } from '../hooks/useLazy';
+import { ProcessedPost } from '../types';
 
 export const Post = ({
   path,
   load,
 }: {
   path: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  load: () => Promise<any>;
+  load: () => Promise<ProcessedPost>;
 }) => {
   const match = useLazyPage(path, load);
   const title = match.title;

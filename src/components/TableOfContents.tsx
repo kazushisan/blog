@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Heading } from '../types/Heading';
+import { Heading } from '../types';
 
 const getPosition = (element: Element) =>
   (

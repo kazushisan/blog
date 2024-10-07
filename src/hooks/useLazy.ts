@@ -1,7 +1,7 @@
-import { createElement } from 'react';
+import { createElement, ReactElement } from 'react';
+import { ProcessedPost, PostListItem } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let postList: any[] | null = null;
+let postList: PostListItem[] | null = null;
 
 export const useLazyPostList = () => {
   if (postList) {
@@ -13,10 +13,15 @@ export const useLazyPostList = () => {
   });
 };
 
-const loaded = new Map();
+const loaded = new Map<
+  string,
+  Omit<ProcessedPost, 'default' | 'path'> & { element: ReactElement }
+>();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useLazyPage = (path: string, load: () => Promise<any>) => {
+export const useLazyPage = (
+  path: string,
+  load: () => Promise<ProcessedPost>,
+) => {
   const page = loaded.get(path);
 
   if (page) {
@@ -32,12 +37,10 @@ export const useLazyPage = (path: string, load: () => Promise<any>) => {
     }
     loaded.set(path, {
       title: value.title,
-      draft: value.draft,
       date: value.date,
       permalink: value.permalink,
       modifiedDate: value.modifiedDate,
       hash: value.hash,
-      weight: value.weight || 0,
       headings: value.headings,
       element: createElement(value.default),
     });
