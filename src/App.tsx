@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { usePath } from './utils/router';
+import { usePath } from './router';
 import ContentRoutes from 'content:routes';
 import { Post } from './pages/Post';
 import { PostList } from './pages/PostList';

@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { App } from './App';
-import { ClientRouter } from './utils/router';
+import { ClientRouter } from './router';
 
 const container = document.querySelector('#root');
 
