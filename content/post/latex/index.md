@@ -123,7 +123,120 @@ or enter new name. (Default extension: sty)
 sudo tlmgr install enumitem
 ```
 
-## よく使う設定
+## 基本
+
+まずは、最低限のソースファイルを作ってみます。`article.tex` に以下の内容を保存します。
+
+```latex
+\documentclass[12pt,a4j]{ltjsarticle}
+% プリアンブル
+\usepackage{luatexja}
+\begin{document}
+はじめてのLaTeX
+\end{document}
+```
+
+`\begin{document}`以前がプリアンブル、`\begin{document} \end{document}`で囲まれた部分に実際の内容を書きます。保存したディレクトリで`lualatex article` を実行すると `article.pdf` をはじめとしたファイルが生成されます。
+
+![コマンドの実行](execute-command.png)
+
+`article.pdf`は次の画像のようになっているはずです。
+
+![はじめてのPDF](first-output.png)
+
+今後はこのファイルに追記します。
+
+### タイトル
+
+`\begin{document}`の直後に
+```latex
+\title{タイトル}
+\author{作者}
+\date{2018年1月1日}
+\maketitle
+```
+と入力してします。
+
+`\maketitle`コマンドを書くことによって実際にタイトルが生成されます。そのため、`\maketitle`がない場合にはタイトルは表示されません。`\date{}`コマンドによって日付を記入できます。`\date{\today}`で今日の日付を自動的に出力することもできます。[^auto_date]
+
+[^auto_date]: `\date{}`コマンドを省略した場合にも同じように今日の日付が出力されます。
+
+`\thanks{}`コマンドを使うことで、所属などを脚注として追加できます。
+
+### 見出し
+
+主に使うのは以下のコマンドです。
+
+```latex
+\section{} % 節
+\subsection{} % 項
+\subsubsection{} % 目
+\paragraph{} % 段落
+```
+
+それぞれの`{}`の中に見出しの文字列を指定します。
+
+## 箇条書き
+
+```latex
+\begin{enumerate} % 順序ありのリスト
+\item 項目1
+\item 項目2
+\end{enumerate}
+
+\begin{itemize} % 順序なしのリスト
+\item 項目
+\item 項目
+\end{itemize}
+```
+
+この出力結果は次のようになります。
+
+![箇条書きの出力](list-output.png)
+
+箇条書きのスタイルを変更するには、プリアンブルに`\usepackage{enumitem}`を追加したうえで、オプションを指定します。
+
+```latex
+\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=*]
+```
+
+### 作成例
+
+以上の結果を踏まえて、ファイルを作成してみました。ソースコードは次の通りです。
+
+```latex
+\documentclass[12pt,a4j]{ltjsarticle}
+% プリアンブル
+\usepackage{luatexja}
+\begin{document}
+\title{タイトル}
+\author{作者}
+\date{2018年1月1日}
+\maketitle
+
+はじめてのLaTeX
+
+\section{節} % 節
+\subsection{項} % 項
+\subsubsection{目} % 目
+\paragraph{段落} % 段落
+
+\begin{enumerate} % 順序ありのリスト
+\item 項目1
+\item 項目2
+\end{enumerate}
+
+\begin{itemize} % 順序なしのリスト
+\item 項目
+\item 項目
+\end{itemize}
+\end{document}
+```
+このファイルからPDFを生成すると、次のような結果が得られます。
+
+![基本的なコマンドを使ったファイル](basic-output.png)
+
+## ページの設定
 
 ### ヘッダー・ページ番号
 
@@ -148,7 +261,7 @@ sudo tlmgr install enumitem
 
 ### ページ余白の設定
 
-普段よく使う四方25mmのマージンに設定するには、
+四方25mmのマージンに設定するには以下のように記述します。
 
 ```latex
 % 縦
@@ -165,7 +278,7 @@ sudo tlmgr install enumitem
 \addtolength{\textwidth}{-50truemm} % 本文の幅から50mm引く
 ```
 
-と記述します。
+## 書式のカスタマイズ
 
 ### 見出し
 
@@ -189,37 +302,6 @@ sudo tlmgr install enumitem
 
 `\arabic`などのコマンドに囲まれた部分にはカウンタを指定します。カウンタとはTeXで見出しの番号が入っている変数のようなものです。見出しのタイプを指定することができます。
 
-さきほどの例を見てみましょう。
-
-```latex
-\documentclass[12pt,a4j]{ltjsarticle}
-\usepackage{luatexja}
-\renewcommand{\thesubsection}{\arabic{subsection}}
-
-\begin{document}
-
-\section{はじめに}
-
-\subsection{なぜWordよりLaTeXを使うのか}
-
-普段からLaTeXをよく使うのですが、なぜLaTeXのほうがいいか、自分の考える理由をまとめてみました。
-
-\begin{itemize}
-\item Wordを使っていて、リストをネストしたり、インデントを調整したりすると後から同じように再現するのはかなり面倒です。LaTeXの場合は、ソースコードで構造が指定されているので、あとから同様のファイルを作るのは簡単です。
-\item ターミナルからの操作も、他のスクリプトと連携させることも、LaTeXならばソースファイルはテキストベースなので簡単です。
-\end{itemize}
-
-\subsection{種類}
-
-TeXファイルを実際にPDFファイルに変換する処理を担うTeXの処理系には、いくつかの種類・派生があります。
-
-\end{document}
-```
-
-このようなドキュメントを作成し、PDFを出力すると、次のような結果が得られます。`subsection`は本来`1.1`のように、`section`の番号も入りますが、`\renewcommand` を用いたことによって、その表示を消すことができました。
-
-![見出しのカスタマイズ](customize-headings.png)
-
 ### 見出しをさらにカスタマイズする
 
 見出しをさらにカスタマイズするには、`titlesec`パッケージを利用します。はじめにインストールします。
@@ -237,7 +319,7 @@ sudo tlmgr install titlesec
 
 上の例では、`section`の見出しを変更して、問題文の表示に使っています。
 
-この例を含むソースファイル
+例えばこちらのソースコードをコンパイルしています。
 
 ```latex
 \documentclass[12pt,a4j]{ltjsarticle}
@@ -268,7 +350,7 @@ f(x)= \left\{
 \end{document}
 ```
 
-からPDFを出力すると、つぎのような結果が得られます。
+生成されるファイルは以下のようになります。
 
 ![見出しのカスタマイズ2](customize-headings-2.png)
 
@@ -294,11 +376,11 @@ f(x)= \left\{
 
 このコードの出力結果は、次のようになります。
 
-![箇条書きのカスタマイズ](customize-list.png)
+<img alt="箇条書きのカスタマイズ" width="200" src="customize-list.png" />
 
-## 短いレポート
+## よく使うテンプレート
 
-私が普段短いレポート課題を提出するときに使う設定をまとめたボイラープレートです。
+大学生のときによく使っていたテンプレートです。
 
 ```latex
 \documentclass[12pt,a4j]{ltjsarticle}
