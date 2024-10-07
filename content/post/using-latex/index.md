@@ -62,7 +62,7 @@ sudo ./install-tl -no-gui --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/t
 
 インストーラにしたがって、オプションを選択します。MacのBasicTeXに準じている`small scheme`を選びました。他のオプションはそのままでインストールします。
 
-インストーラの動作が終了したらしたら、パスを通して、日本語環境とghostscriptをインストールします。
+インストーラの動作が終了したら以下のコマンドでパスを通し、日本語環境とghostscriptをインストールします。
 
 ```bash
 sudo /usr/local/texlive/????/bin/*/tlmgr path add
@@ -90,7 +90,7 @@ sudo ./install-tl -no-gui --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/t
 
 ![インストーラ画面](tex-installer.png)
 
-インストーラの動作が終了したらしたら、パスを通して、日本語環境をインストールして完了です。
+インストーラの動作が終了したら以下のコマンドでパスを通し、日本語環境とghostscriptをインストールして完了です。
 
 ```bash
 sudo /usr/local/texlive/????/bin/*/tlmgr path add
