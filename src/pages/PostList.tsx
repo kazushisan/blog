@@ -1,4 +1,4 @@
-import { useLazyPosts } from '../hooks/useLazy';
+import { useLazyPosts } from '../hooks/useLazyPost';
 import { PostMeta } from '../components/PostMeta';
 import { Head } from '../components/Head';
 import { Link } from '../components/Link';

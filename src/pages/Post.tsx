@@ -2,7 +2,7 @@ import { ProcessedPost } from 'content:routes';
 import { Head } from '../components/Head';
 import { PostMeta } from '../components/PostMeta';
 import { TableOfContents } from '../components/TableOfContents';
-import { useLazyPost } from '../hooks/useLazy';
+import { useLazyPost } from '../hooks/useLazyPost';
 
 export const Post = ({
   path,
