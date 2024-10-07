@@ -172,7 +172,7 @@ sudo tlmgr install enumitem
 
 それぞれの`{}`の中に見出しの文字列を指定します。
 
-## 箇条書き
+### 箇条書き
 
 ```latex
 \begin{enumerate} % 順序ありのリスト
