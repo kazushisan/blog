@@ -7,7 +7,10 @@ import {
   useState,
 } from 'react';
 
-const Router = createContext<{ url: string } | null>(null);
+const Router = createContext<{
+  url: string;
+  setUrl: (url: string) => void;
+} | null>(null);
 
 export const useNavigate = () => {
   const context = useContext(Router);
@@ -18,10 +21,13 @@ export const useNavigate = () => {
 
   const navigate = useCallback((url: string) => {
     window.history.pushState({}, '', url);
+    context.setUrl(url);
   }, []);
 
   return navigate;
 };
+
+const noop = () => void 0;
 
 export const ServerRouter = ({
   url,
@@ -29,7 +35,9 @@ export const ServerRouter = ({
 }: {
   url: string;
   children: ReactNode;
-}) => <Router.Provider value={{ url }}>{children}</Router.Provider>;
+}) => (
+  <Router.Provider value={{ url, setUrl: noop }}>{children}</Router.Provider>
+);
 
 export const ClientRouter = ({ children }: { children: ReactNode }) => {
   const [url, setUrl] = useState(window.location.pathname);
@@ -44,7 +52,7 @@ export const ClientRouter = ({ children }: { children: ReactNode }) => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  return <Router.Provider value={{ url }}>{children}</Router.Provider>;
+  return <Router.Provider value={{ url, setUrl }}>{children}</Router.Provider>;
 };
 
 export const useUrl = () => {

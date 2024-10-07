@@ -3,6 +3,15 @@
 import { MouseEvent, ReactNode, useCallback } from 'react';
 import { useNavigate } from '../utils/router';
 
+const isInternal = (href: string) => {
+  if (href.startsWith('/')) {
+    return true;
+  }
+
+  const url = new URL(href);
+  return url.origin === window.location.origin;
+};
+
 export const Link = ({
   onClick,
   className,
@@ -16,14 +25,16 @@ export const Link = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleClick = useCallback((e: MouseEvent<HTMLAnchorElement>) => {
-    const href = e.currentTarget.href || '';
-    if (href.startsWith(window.location.origin)) {
-      e.preventDefault();
-      navigate(href);
-    }
-    onClick?.(e);
-  }, []);
+  const handleClick = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>) => {
+      if (isInternal(e.currentTarget.href)) {
+        e.preventDefault();
+        navigate(e.currentTarget.href);
+      }
+      onClick?.(e);
+    },
+    [navigate],
+  );
 
   return (
     <a className={className} href={to} onClick={handleClick}>
