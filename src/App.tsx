@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { usePath } from './router';
-import ContentRoutes from 'content:routes';
+import routes from 'content:routes';
 import { Post } from './pages/Post';
 import { PostList } from './pages/PostList';
 
@@ -26,7 +26,7 @@ const Layout = ({
 
 export const App = () => {
   const path = usePath();
-  const target = ContentRoutes.find((item) => item.path === path);
+  const target = routes.find((item) => item.path === path);
 
   if (target) {
     return (
