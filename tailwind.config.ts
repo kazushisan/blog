@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-require-imports */
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import typography from '@tailwindcss/typography';
+
+export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
@@ -25,5 +24,5 @@ module.exports = {
       }),
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [typography],
 };
