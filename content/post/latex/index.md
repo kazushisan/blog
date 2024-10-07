@@ -18,21 +18,21 @@ LaTeXを使い始めるのに二つのものが必要です。
 - TeXのソースファイル
 - それを処理する任意のTeX処理系
 
-多くのチュートリアルでは、LaTeXの統合環境をインストールすることを勧めています、しかし統合環境を入れることは必須ではなく、自分の好きなエディタと、TeX処理系だけで十分に使えます。
+多くのチュートリアルでは、LaTeXの統合環境をインストールすることを勧めています。しかし統合環境を入れることは必須ではなく、自分の好きなエディタと、TeX処理系だけで十分に使えます。
 
 ### Linux
 
-Linuxでは、各ディストリビューションのパッケージマネージャ(ex. `yum`, `apt`)が提供しているLaTeXのパッケージを利用することもできますが、LaTeXの各種設定を変更できるパッケージを管理・利用する都合上、TeX Liveを使うことをおすすめです。TeX Liveを使うことによって、`tlmgr`でTeXのパッケージを管理することができます。
+Linuxでは、各ディストリビューションのパッケージマネージャ(ex. `yum`, `apt`)が提供しているLaTeXのパッケージを利用することもできますが、LaTeXの各種設定を変更できるパッケージを管理・利用する都合上、TeX Liveを使うことがおすすめです。TeX Liveを使うことによって、`tlmgr`でTeXのパッケージを管理することができます。
 
 ここではArch Linuxを例に説明しますが、ほかのディストリビューションでも概ね同じ方法でインストールが可能です。
 
-#### TeX関連のパッケージをpacmanの管理下からはず
+#### TeX関連のパッケージをpacmanの管理下から除外する
 
 パッケージマネージャとTeX Liveが干渉してしまうため、TeX関連のパッケージについてはOSのパッケージマネージャに管理されないようにする必要があります。[TeX Wiki](https://texwiki.texjp.org/?texlive-dummy#archlinux)によると、
 
 > Linux で TeX Live 公式パッケージをインストールした場合は TeX Live に依存するパッケージによって各種 Linux ディストリビューションが提供している TeX Live がインストールされないように TeX Live の dummy パッケージをインストールします。
 
-dummyパッケージを導入することによってTeX関連のパッケージがpacmanに管理されないようにする方法が紹介されています。dummyパッケージについてはあまりスマートな解決方法ではないため、議論の結果現在はAURから削除されているようです。ここでは `pacman --assume-installed`を使ってを解決しました。
+dummyパッケージを導入することによってTeX関連のパッケージがpacmanに管理されないようにする方法が紹介されています。dummyパッケージについてはあまりスマートな解決方法ではないため、議論の結果現在はAURから削除されているようです。そこで、`pacman --assume-installed`を使って解決しました。
 
 [texlive-dummyのソースコード](https://github.com/zhou13/aur/blob/master/texlive-dummy/PKGBUILD)を見てみると、
 
@@ -47,7 +47,7 @@ provides=('texlive-bin' $(pacman -Sgq texlive-most texlive-lang))
 alias pacman="pacman --assume-installed texlive-bin $(\pacman -Sgq texlive-most texlive-lang)"
 ```
 
-読み込むために一度ターミナルで`$ source ~/.bashrc`を実行します。
+読み込むために一度ターミナルで`source ~/.bashrc`を実行します。
 
 #### インストーラの実行
 
@@ -60,7 +60,7 @@ cd install-tl-20*
 sudo ./install-tl -no-gui --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
 ```
 
-インストーラにしたがって、オプションを選択します。普段使っているMacのBasicTeXに準じている`small scheme`を選びました。他のオプションはそのままでインストールします。
+インストーラにしたがって、オプションを選択します。MacのBasicTeXに準じている`small scheme`を選びました。他のオプションはそのままでインストールします。
 
 インストーラの動作が終了したらしたら、パスを通して、日本語環境とghostscriptをインストールします。
 
@@ -73,7 +73,7 @@ sudo pacman -S ghostscript
 
 ### macOS
 
-`MacTeX`の使う例が多いですが、ここでも、Linuxの場合同様にTeX Liveを使ってインストールします。
+`MacTeX`の使う例が多いですが、Linuxと同様にTeX Liveを使ってインストールします。
 
 #### インストーラの実行
 
@@ -90,7 +90,7 @@ sudo ./install-tl -no-gui --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/t
 
 ![インストーラ画面](tex-installer.png)
 
-インストーラの動作が終了したらしたら、パスを通して、日本語環境とインストールして完了です。
+インストーラの動作が終了したらしたら、パスを通して、日本語環境をインストールして完了です。
 
 ```bash
 sudo /usr/local/texlive/????/bin/*/tlmgr path add
@@ -102,13 +102,11 @@ sudo tlmgr install collection-langjapanese
 
 インストールが完了すると、TeXで使うパッケージの管理ツール`tlmgr`使えるようになります。これによって、パッケージの追加やアップデートが実行できまうs。
 
-ソースファイルのヘッダーでパッケージを読み込みます。
+パッケージはソースファイル以下のヘッダーで読み込みますが、パッケージが存在しない場合にはコンパイル時にエラーが発生します。
 
 ```latex
 \usepackage{enumitem}
 ```
-
-パッケージが存在しない場合にはコンパイル時にエラーが発生します。
 
 ```
 ! LaTeX Error: File `enumitem.sty' not found.
@@ -117,7 +115,7 @@ Type X to quit or <RETURN> to proceed,
 or enter new name. (Default extension: sty)
 ```
 
-パッケージの追加は以下のコマンドで行います。
+`tlmgr` を使うと、以下のようにパッケージを追加できます。
 
 ```bash
 sudo tlmgr install enumitem
@@ -140,7 +138,7 @@ sudo tlmgr install enumitem
 
 ![コマンドの実行](execute-command.png)
 
-`article.pdf`は次の画像のようになっているはずです。
+生成された `article.pdf` 以下のようになります。
 
 ![はじめてのPDF](first-output.png)
 
