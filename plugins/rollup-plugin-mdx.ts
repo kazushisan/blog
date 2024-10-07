@@ -43,6 +43,14 @@ function mdx() {
         },
       });
 
+      if (typeof data.title !== 'string') {
+        throw new Error(`title not found for ${path}`);
+      }
+
+      if (typeof data.date !== 'string') {
+        throw new Error(`date not found for ${path}`);
+      }
+
       const history = execSync(
         `git log --pretty=format:"%H %cd %s" --date=iso-strict -- ${file.path}`,
       )
@@ -76,7 +84,8 @@ function mdx() {
       });
 
       return `${namedExports({
-        ...data,
+        title: data.title,
+        date: data.date,
         hash,
         permalink,
         modifiedDate,
