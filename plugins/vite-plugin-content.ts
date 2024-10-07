@@ -12,6 +12,8 @@ const internalPrefix = 'content-internal:';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
 
+const configPath = resolve(projectRoot, './content.config.js');
+
 const generateExportCode = (routes: { path: string; file: string }[]) =>
   toJs({
     type: 'Program',
@@ -118,7 +120,7 @@ function content() {
       }
 
       if (source === `${internalPrefix}posts`) {
-        return resolve(projectRoot, './plugins/posts.js');
+        return configPath;
       }
 
       return null;
@@ -147,7 +149,7 @@ function content() {
 
       if (serve) {
         return `
-        import query from '${internalPrefix}${target}';
+        import { query } from '${internalPrefix}${target}';
         const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
         const list = Object.entries(files).map(([path, data]) => ({
           path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
@@ -162,9 +164,7 @@ function content() {
         files.map((file) => extractFromFile.call(this, file)),
       );
 
-      const { default: query } = await import(
-        resolve(projectRoot, './plugins/posts.js')
-      );
+      const { query } = await import(configPath);
       const result = query(list);
 
       return `export default ${stringifyObject(result)}`;
