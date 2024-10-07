@@ -138,10 +138,6 @@ sudo tlmgr install enumitem
 
 ![コマンドの実行](execute-command.png)
 
-生成された `article.pdf` 以下のようになります。
-
-![はじめてのPDF](first-output.png)
-
 今後はこのファイルに追記します。
 
 ### タイトル
