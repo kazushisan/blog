@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 import { PassThrough } from 'node:stream';
 import { renderToPipeableStream } from 'react-dom/server';
-import { createElement } from 'react';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -43,36 +42,36 @@ const template = await readFile(
 );
 const [header, footer] = template.split('<!--ssr-outlet-->');
 
-const { make: ServerRoot } = await import('../dist/server/serverRenderer.js');
+const { render } = await import('../dist/server/serverRenderer.js');
 
 const promises = routes.map(async (route) => {
   const passThrough = new PassThrough();
-  const context = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const context: any = {};
 
-  const stream = renderToPipeableStream(
-    createElement(ServerRoot, { serverUrlString: route, context }),
-    {
-      onShellReady() {
-        passThrough.write(
-          header.replace(
-            '<!--helmet-->',
-            [
-              context.helmet.title.toString(),
-              context.helmet.meta.toString(),
-              context.helmet.link.toString(),
-            ].join(''),
-          ),
-        );
-        stream.pipe(passThrough);
-        passThrough.end(footer);
-      },
-      onError(e) {
-        throw e;
-      },
+  const stream = renderToPipeableStream(render({ path: route, context }), {
+    onShellReady() {
+      passThrough.write(
+        header.replace(
+          '<!--helmet-->',
+          [
+            context.helmet.title.toString(),
+            context.helmet.meta.toString(),
+            context.helmet.link.toString(),
+          ].join(''),
+        ),
+      );
+      stream.pipe(passThrough);
+      passThrough.end(footer);
     },
-  );
+    onError(e) {
+      throw e;
+    },
+  });
 
-  const html = await new Response(passThrough).text();
+  // fixme
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const html = await new Response(passThrough as any).text();
 
   await mkdir(resolve(__dirname, '../dist/static', `./${route}`), {
     recursive: true,
