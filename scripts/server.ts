@@ -23,11 +23,10 @@ async function createServer() {
   app.use(vite.middlewares);
 
   app.use('*', async (req, res, next) => {
-    const url = req.originalUrl;
-    const path = req.path;
+    const { originalUrl } = req;
 
     try {
-      const transformed = await vite.transformIndexHtml(url, template);
+      const transformed = await vite.transformIndexHtml(originalUrl, template);
 
       const [header, footer] = transformed.split('<!--ssr-outlet-->');
 
@@ -36,26 +35,29 @@ async function createServer() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const context: any = {};
 
-      const stream = renderToPipeableStream(render({ path, context }), {
-        onShellReady() {
-          res.status(200).set({ 'Content-Type': 'text/html' });
-          res.write(
-            header.replace(
-              '<!--helmet-->',
-              [
-                context.helmet.title.toString(),
-                context.helmet.meta.toString(),
-                context.helmet.link.toString(),
-              ].join(''),
-            ),
-          );
-          stream.pipe(res);
-          res.end(footer);
+      const stream = renderToPipeableStream(
+        render({ path: originalUrl, context }),
+        {
+          onShellReady() {
+            res.status(200).set({ 'Content-Type': 'text/html' });
+            res.write(
+              header.replace(
+                '<!--helmet-->',
+                [
+                  context.helmet.title.toString(),
+                  context.helmet.meta.toString(),
+                  context.helmet.link.toString(),
+                ].join(''),
+              ),
+            );
+            stream.pipe(res);
+            res.end(footer);
+          },
+          onError(e) {
+            throw e;
+          },
         },
-        onError(e) {
-          throw e;
-        },
-      });
+      );
     } catch (e) {
       vite.ssrFixStacktrace(e);
       next(e);
