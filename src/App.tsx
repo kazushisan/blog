@@ -4,7 +4,6 @@ import { Header } from './components/Header';
 import { usePath } from './utils/router';
 import ContentRoutes from 'content:routes';
 import { Post } from './pages/Post';
-import { Latex } from './pages/Latex';
 import { PostList } from './pages/PostList';
 
 const Layout = ({
