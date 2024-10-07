@@ -4,7 +4,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
-import { createElement } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -31,35 +30,30 @@ async function createServer() {
 
       const [header, footer] = transformed.split('<!--ssr-outlet-->');
 
-      const { make: ServerRoot } = await vite.ssrLoadModule(
-        'src/serverRenderer.js',
-      );
+      const { render } = await vite.ssrLoadModule('src/serverRenderer.tsx');
 
       const context = {};
 
-      const stream = renderToPipeableStream(
-        createElement(ServerRoot, { serverUrlString: url, context }),
-        {
-          onShellReady() {
-            res.status(200).set({ 'Content-Type': 'text/html' });
-            res.write(
-              header.replace(
-                '<!--helmet-->',
-                [
-                  context.helmet.title.toString(),
-                  context.helmet.meta.toString(),
-                  context.helmet.link.toString(),
-                ].join(''),
-              ),
-            );
-            stream.pipe(res);
-            res.end(footer);
-          },
-          onError(e) {
-            throw e;
-          },
+      const stream = renderToPipeableStream(render({ url, context }), {
+        onShellReady() {
+          res.status(200).set({ 'Content-Type': 'text/html' });
+          res.write(
+            header.replace(
+              '<!--helmet-->',
+              [
+                context.helmet.title.toString(),
+                context.helmet.meta.toString(),
+                context.helmet.link.toString(),
+              ].join(''),
+            ),
+          );
+          stream.pipe(res);
+          res.end(footer);
         },
-      );
+        onError(e) {
+          throw e;
+        },
+      });
     } catch (e) {
       vite.ssrFixStacktrace(e);
       next(e);
