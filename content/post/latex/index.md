@@ -429,7 +429,7 @@ f(x)= \left\{
 
 ---
 
-### 参考
+## 参考
 
 - [Linux - TeX Wiki](https://texwiki.texjp.org/?Linux#texliveinstall)
 - [TeX Live/Mac - TeX Wiki](https://texwiki.texjp.org/?TeX%20Live%2FMac#texlive-install-official)
