@@ -149,12 +149,14 @@ sudo tlmgr install enumitem
 ### タイトル
 
 `\begin{document}`の直後に
+
 ```latex
 \title{タイトル}
 \author{作者}
 \date{2018年1月1日}
 \maketitle
 ```
+
 と入力してします。
 
 `\maketitle`コマンドを書くことによって実際にタイトルが生成されます。そのため、`\maketitle`がない場合にはタイトルは表示されません。`\date{}`コマンドによって日付を記入できます。`\date{\today}`で今日の日付を自動的に出力することもできます。[^auto_date]
@@ -232,6 +234,7 @@ sudo tlmgr install enumitem
 \end{itemize}
 \end{document}
 ```
+
 このファイルからPDFを生成すると、次のような結果が得られます。
 
 ![基本的なコマンドを使ったファイル](basic-output.png)
@@ -376,7 +379,7 @@ f(x)= \left\{
 
 このコードの出力結果は、次のようになります。
 
-<img alt="箇条書きのカスタマイズ" width="200" src="customize-list.png" />
+![箇条書きのカスタマイズ](customize-list.png)
 
 ## よく使うテンプレート
 
