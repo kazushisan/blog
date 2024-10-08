@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Heading } from '../types';
 
 const getPosition = (element: Element) =>
@@ -14,7 +14,13 @@ const getHeadingElements = (headings: Heading[]) =>
   );
 
 export const TableOfContents = (props: { headings: Heading[] }) => {
-  const headings = props.headings;
+  const headings = useMemo(
+    () =>
+      props.headings.filter(
+        (heading) => heading.depth === 2 || heading.depth === 3,
+      ),
+    [props.headings],
+  );
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
