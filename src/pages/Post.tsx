@@ -36,7 +36,7 @@ export const Post = ({
         </div>
       </div>
       <div className="hidden xl:block flex-none w-72">
-        <div className="p-4 sticky mt-40 top-40">
+        <div className="p-4 sticky mt-40 inset-0 max-h-screen overflow-y-scroll">
           <TableOfContents headings={post.headings} />
         </div>
       </div>
