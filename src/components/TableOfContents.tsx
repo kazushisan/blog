@@ -13,7 +13,8 @@ const getHeadingElements = (headings: Heading[]) =>
     ),
   );
 
-const useTableOfContentsActiveItem = (headings: Heading[]) => {
+export const TableOfContents = (props: { headings: Heading[] }) => {
+  const headings = props.headings;
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -72,13 +73,6 @@ const useTableOfContentsActiveItem = (headings: Heading[]) => {
 
     return () => observer.disconnect();
   }, [headings]);
-
-  return activeId;
-};
-
-export const TableOfContents = (props: { headings: Heading[] }) => {
-  const headings = props.headings;
-  const activeId = useTableOfContentsActiveItem(headings);
 
   return (
     <ul>
