@@ -5,7 +5,7 @@ date: 2020-04-03T23:26:37+09:00
 
 ## これは何
 
-MacでGurobiのダウンロード・インストール・アカデミックライセンスを有効化する方法をまとめたメモです．最後に動作確認のためGurobi + Pythonで簡単な最適化問題を解きました．
+MacでGurobiのダウンロード・インストール・アカデミックライセンスを有効化する方法をまとめたメモです。最後に動作確認のためGurobi + Pythonで簡単な最適化問題を解きました。
 
 ## 環境
 
@@ -18,28 +18,28 @@ MacでGurobiのダウンロード・インストール・アカデミックラ�
 
 ### 公式サイトに登録
 
-https://pages.gurobi.com/registration からGurobiのアカウントを発行できます．`Academic` をプルダウンから選択した上で，メールアドレスには `.ac.jp` ドメインのものを設定しました．
+https://pages.gurobi.com/registration からGurobiのアカウントを発行できます。`Academic` をプルダウンから選択した上で、メールアドレスには `.ac.jp` ドメインのものを設定しました。
 
 ![登録画面](gurobi-register.png)
 
-指定したメールアドレスにパスワード設定用のリンクを含むメールが飛んできます．パスワードを設定したら https://www.gurobi.com/account/ にログインします．
+指定したメールアドレスにパスワード設定用のリンクを含むメールが飛んできます。パスワードを設定したら https://www.gurobi.com/account/ にログインします。
 
 ### ライセンスの発行
 
-Gurobiの公式サイトにログインできたら，右上のメニューより，`Download & Licenses` > `Academic License` を選択するか https://www.gurobi.com/downloads/end-user-license-agreement-academic/ にアクセスすることでアカデミックライセンスを発行できます．同意するとすぐにライセンスが発行されます．
+Gurobiの公式サイトにログインできたら、右上のメニューより、`Download & Licenses` > `Academic License` を選択するか https://www.gurobi.com/downloads/end-user-license-agreement-academic/ にアクセスすることでアカデミックライセンスを発行できます。同意するとすぐにライセンスが発行されます。
 
 ![ライセンスの発行画面](gurobi-license.png)
 
 
 ### ダウンロード
 
-http://www.gurobi.com/downloads/gurobi-optimizer からダウンロードできます．macOS用の `.pkg` ファイルをダウンロードして，実行します．
+http://www.gurobi.com/downloads/gurobi-optimizer からダウンロードできます。macOS用の `.pkg` ファイルをダウンロードして、実行します。
 
 ![インストーラの画面](gurobi-installer.png)
 
 ### ライセンスの有効化
 
-https://www.gurobi.com/downloads/licenses/ にさきほど発行したライセンスがあるので，License IDをクリックして詳細画面に移動します．ページの下のほうに`grbgetkey`からはじまるコマンドが記載されているので，これをそのままコピーしてターミナルで実行します．
+https://www.gurobi.com/downloads/licenses/ にさきほど発行したライセンスがあるので、License IDをクリックして詳細画面に移動します。ページの下のほうに`grbgetkey`からはじまるコマンドが記載されているので、これをそのままコピーしてターミナルで実行します。
 
 ### 動作確認
 
@@ -49,35 +49,35 @@ https://www.gurobi.com/downloads/licenses/ にさきほど発行したライセ�
 gurobi.sh
 ```
 
-を実行して，Gurobiのインタラクティブシェルが問題なく起動することを確認します．
+を実行して、Gurobiのインタラクティブシェルが問題なく起動することを確認します。
 
 ### Pythonスクリプト内でインポートして使えるようにする
 
-Gurobi自体にもPythonのランタイムは付属しており，`gurobi.sh your-file-name.py` といった形で実行したり，Gurobiのインタラクティブシェルだけを使っている分にはなにもしなくていいのですが，自分で用意したPython環境内でGurobiを使いたいので次の手順を実行しました．
+Gurobi自体にもPythonのランタイムは付属しており、`gurobi.sh your-file-name.py` といった形で実行したり、Gurobiのインタラクティブシェルだけを使っている分にはなにもしなくていいのですが、自分で用意したPython環境内でGurobiを使いたいので次の手順を実行しました。
 
-はじめに次のコマンドを実行してGurobiがインストールされているディレクトリを探します．
+はじめに次のコマンドを実行してGurobiがインストールされているディレクトリを探します。
 
 ```bash
 readlink `which gurobi.sh`
 ```
 
-`//Library/gurobi901/mac64/bin/gurobi.sh` のような出力が得られるので，`bin/gurobi.sh` 以前の部分のパスに移動します．
+`//Library/gurobi901/mac64/bin/gurobi.sh` のような出力が得られるので、`bin/gurobi.sh` 以前の部分のパスに移動します。
 
 ```bash
 cd /Library/gurobi901/mac64
 ```
 
-最後に次のコマンドを実行して，自分で用意したPython環境内にGurobiのライブラリを追加します．
+最後に次のコマンドを実行して、自分で用意したPython環境内にGurobiのライブラリを追加します。
 
 ```bash
 python setup.py install
 ```
 
-問題なく追加できた場合，`pip list` を実行すると `gurobipy` が一覧に含まれているの確認できます．
+問題なく追加できた場合、`pip list` を実行すると `gurobipy` が一覧に含まれているの確認できます。
 
 ## 試しに簡単な最適化問題を解く
 
-久保 幹雄，ジョア・ペドロ・ペドロソ，村松 正和，アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より，1章2節の線形計画問題を解いてみます．
+久保 幹雄、ジョア・ペドロ・ペドロソ、村松 正和、アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より、1章2節の線形計画問題を解いてみます。
 
 $$
 \begin{array}{crc}
@@ -89,7 +89,7 @@ $$
 \end{array}
 $$
 
-ほとんど本のサンプルコードの通りですが，次のコードを書きました．
+ほとんど本のサンプルコードの通りですが、次のコードを書きました。
 
 ```python
 from gurobipy import *
@@ -113,7 +113,7 @@ for v in model.getVars():
     print(v.VarName, v.X)
 ```
 
-これを実行すると次の通りの結果が得られて，Gurobi + Pythonのセットアップのセットアップが問題なく動作することを確認できました．
+これを実行すると次の通りの結果が得られて、Gurobi + Pythonのセットアップのセットアップが問題なく動作することを確認できました。
 
 ```
 Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (mac64)

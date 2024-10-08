@@ -1,11 +1,11 @@
 ---
-title: "最適化ソルバーSCIP，モデリング言語Pyomoを使ってPythonで最適化問題を解いてみた"
+title: "最適化ソルバーSCIP、モデリング言語Pyomoを使ってPythonで最適化問題を解いてみた"
 date: 2020-09-16T21:11:56+09:00
 ---
 
 ## TL;DR
 
-最適化ソルバーSCIPとPythonベースのモデリング言語をPyomoを使ってPython上で最適化問題を解く方法をまとめました．Macでのインストールを想定していますが，UNIXライクなOSであれば，ほぼほぼ同じ手順で再現できると思います．
+最適化ソルバーSCIPとPythonベースのモデリング言語をPyomoを使ってPython上で最適化問題を解く方法をまとめました。Macでのインストールを想定していますが、UNIXライクなOSであれば、ほぼほぼ同じ手順で再現できると思います。
 
 ## SCIP とは
 
@@ -13,7 +13,7 @@ date: 2020-09-16T21:11:56+09:00
 
 [公式サイト](https://www.scipopt.org/)より
 
-との通り，SCIPは非商用・無料で使える高速な最適化ソルバーです．混合整数計画問題と混合整数非線形計画問題に対応しています．
+との通り、SCIPは非商用・無料で使える高速な最適化ソルバーです。混合整数計画問題と混合整数非線形計画問題に対応しています。
 
 ## Pyomo とは
 
@@ -21,19 +21,19 @@ date: 2020-09-16T21:11:56+09:00
 
 [Github](https://github.com/Pyomo/pyomo)より
 
-との通り，PyomoはPythonのライブラリで，最適化問題の記述を行うことができます．
+との通り、PyomoはPythonのライブラリで、最適化問題の記述を行うことができます。
 
-Pythonで最適化問題を解くためには，Pyomoによってモデルを記述した上で，SCIPのソルバーを使って実際に問題を解きます．SCIPはネイティブコードとして実行されるので，Python上のPyomoとSCIPのやりとりのためにAMPLというモデリング言語がインタフェースの役割を果たします．（このAMPLの役割の理解にはあまり自信がありません...）
+Pythonで最適化問題を解くためには、Pyomoによってモデルを記述した上で、SCIPのソルバーを使って実際に問題を解きます。SCIPはネイティブコードとして実行されるので、Python上のPyomoとSCIPのやりとりのためにAMPLというモデリング言語がインタフェースの役割を果たします。（このAMPLの役割の理解にはあまり自信がありません...）
 
 
 ## 環境
 
-以降インストールを行なった環境は次の通りです．
+以降インストールを行なった環境は次の通りです。
 
 - macOS 10.15.6
 - Python 3.8.2
 
-また最終的にインストールされたパッケージのバージョンは次の通りです．
+また最終的にインストールされたパッケージのバージョンは次の通りです。
 
 - Pyomo 5.7
 - SCIP 7.0.1
@@ -42,17 +42,17 @@ Pythonで最適化問題を解くためには，Pyomoによってモデルを記
 
 ### ダウンロード
 
-https://www.scipopt.org/index.php#download より，SCIPのOSとバージョンを選択して，プルダウンの下にある `scipoptsuite-{version}.tgz` のリンクをクリックします．
+https://www.scipopt.org/index.php#download より、SCIPのOSとバージョンを選択して、プルダウンの下にある `scipoptsuite-{version}.tgz` のリンクをクリックします。
 
 ![SCIPのOSバージョンを選択](scip-download-pulldown.png)
 
-クリックすると，商用目的の利用ではないことを確認するチェックボックスと利用者の名前などの入力を促すページに遷移するので，入力を行いダウンロードします．
+クリックすると、商用目的の利用ではないことを確認するチェックボックスと利用者の名前などの入力を促すページに遷移するので、入力を行いダウンロードします。
 
 ![SCIPのダウンロードページ](scip-download-page.png)
 
 ### ビルド
 
-以下の手順でSCIP-AMPLバイナリをビルドします．
+以下の手順でSCIP-AMPLバイナリをビルドします。
 
 ```bash
 brew install boost ## コンパイルの依存ライブラリをインストール
@@ -77,13 +77,13 @@ sudo cp bin/scipampl /usr/local/bin/
 
 ## Pyomo のインストール
 
-[Poetry を使ってPythonの依存をきちんと管理したい](https://gadgetlunatic.com/post/setup-a-python-project/#poetry%E3%81%A7%E4%BE%9D%E5%AD%98%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B)ので，以下ではPoetryプロジェクトを作成して話を進めますが，特に気にしなければ
+[Poetry を使ってPythonの依存をきちんと管理したい](https://gadgetlunatic.com/post/setup-a-python-project/#poetry%E3%81%A7%E4%BE%9D%E5%AD%98%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B)ので、以下ではPoetryプロジェクトを作成して話を進めますが、特に気にしなければ
 
 ```bash
 pip install pyomo
 ```
 
-でも問題なくPyomoをインストールできるはずです．
+でも問題なくPyomoをインストールできるはずです。
 
 ### Poetry プロジェクトを作る
 
@@ -96,7 +96,7 @@ poetry add pyomo ## pyomo の追加
 
 ## 最適化問題を解いてみる
 
-[Gurobiを使った例](https://gadgetlunatic.com/post/install-gurobi-on-mac/#%E8%A9%A6%E3%81%97%E3%81%AB%E7%B0%A1%E5%8D%98%E3%81%AA%E6%9C%80%E9%81%A9%E5%8C%96%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E3%81%8F)と同様に，久保 幹雄，ジョア・ペドロ・ペドロソ，村松 正和，アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より，1章2節の線形計画問題を解いてみます．
+[Gurobiを使った例](https://gadgetlunatic.com/post/install-gurobi-on-mac/#%E8%A9%A6%E3%81%97%E3%81%AB%E7%B0%A1%E5%8D%98%E3%81%AA%E6%9C%80%E9%81%A9%E5%8C%96%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E3%81%8F)と同様に、久保 幹雄、ジョア・ペドロ・ペドロソ、村松 正和、アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より、1章2節の線形計画問題を解いてみます。
 
 $$
 \begin{array}{crc}
@@ -110,7 +110,7 @@ $$
 
 ### ソースコード
 
-次のコードを書いてみました．
+次のコードを書いてみました。
 
 ```python
 from pyomo.environ import *
@@ -154,7 +154,7 @@ Model.display()
 
 ### 実行結果
 
-`poetry shell` でvenvに入り，これを実行した結果が次の通りです．
+`poetry shell` でvenvに入り、これを実行した結果が次の通りです。
 
 ```
 SCIP version 7.0.1 [precision: 8 byte] [memory: block] [mode: optimized] [LP solver: SoPlex 5.0.1] [GitHash: b41d526acf]
@@ -234,7 +234,7 @@ Model Sample
         None :  None : 30.0 :  30.0
 ```
 
-Gurobiで実行した場合と同様に，$ x_1 = 10, x_2 = 10, x_3 = 30$ のとき最大値 $1230$ を取ることが求まりました．
+Gurobiで実行した場合と同様に、$ x_1 = 10, x_2 = 10, x_3 = 30$ のとき最大値 $1230$ を取ることが求まりました。
 
 ## Reference
 

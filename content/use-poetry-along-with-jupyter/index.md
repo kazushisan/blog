@@ -3,23 +3,23 @@ title: "JupyterからPoetryでインストールしたライブラリを呼び�
 date: 2020-04-12T22:28:31+09:00
 ---
 
-Jupyter Notebook内で実行したコードに，Poetryでインストールしたモジュールをインポートする記述があると，`ModuleNotFoundError` というエラーが発生します．
+Jupyter Notebook内で実行したコードに、Poetryでインストールしたモジュールをインポートする記述があると、`ModuleNotFoundError` というエラーが発生します。
 
-原因は，システムにインストールされているJupyterが使っているPythonカーネルからはPoetryプロジェクトのvenvが参照できないことです．
+原因は、システムにインストールされているJupyterが使っているPythonカーネルからはPoetryプロジェクトのvenvが参照できないことです。
 
-これを解決するために，JupyterにPoetryが生成したvenvのカーネルを追加します．はじめに `ipykernel` モジュールをプロジェクトに追加します．
+これを解決するために、JupyterにPoetryが生成したvenvのカーネルを追加します。はじめに `ipykernel` モジュールをプロジェクトに追加します。
 
 ```bash
 poetry add --dev ipykernel
 ```
 
-`poetry shell` などで仮想環境に入ったのちに，次のコマンドを実行することでvenvのカーネルをJupyterに追加することができます．
+`poetry shell` などで仮想環境に入ったのちに、次のコマンドを実行することでvenvのカーネルをJupyterに追加することができます。
 
 ```bash
 ipython kernel install --user --name=your-project-name
 ```
 
-Jupyter上でさきほど追加したカーネルを指定して実行することで，問題なくインポートを含むコードを実行することができます．
+Jupyter上でさきほど追加したカーネルを指定して実行することで、問題なくインポートを含むコードを実行することができます。
 
 ## おまけ
 
