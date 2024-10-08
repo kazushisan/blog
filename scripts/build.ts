@@ -21,7 +21,7 @@ await build({
 await build({
   build: {
     outDir: 'dist/server',
-    ssr: 'src/serverRenderer.tsx',
+    ssr: 'src/ssr.tsx',
   },
 });
 
@@ -42,7 +42,7 @@ const template = await readFile(
 );
 const [header, footer] = template.split('<!--ssr-outlet-->');
 
-const { render } = await import('../dist/server/serverRenderer.js');
+const { render } = await import('../dist/server/ssr.js');
 
 const promises = routes.map(async (route) => {
   const passThrough = new PassThrough();

@@ -30,7 +30,7 @@ async function createServer() {
 
       const [header, footer] = transformed.split('<!--ssr-outlet-->');
 
-      const { render } = await vite.ssrLoadModule('src/serverRenderer.tsx');
+      const { render } = await vite.ssrLoadModule('src/ssr.tsx');
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const context: any = {};
