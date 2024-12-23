@@ -6,5 +6,6 @@ export default defineConfig({
   // description: ''
   markdown: {
     math: true,
+    headers: true,
   },
 });
