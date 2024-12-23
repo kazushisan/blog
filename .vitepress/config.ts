@@ -2,6 +2,8 @@ import { defineConfig } from 'vitepress';
 import footnote from 'markdown-it-footnote';
 import type { PluginSimple } from 'markdown-it';
 import { execSync } from 'node:child_process';
+import { relative } from 'node:path';
+import { cwd } from 'node:process';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -24,9 +26,9 @@ const editHistory: PluginSimple = (md) => {
   const render = md.render.bind(md);
 
   md.render = (src, env) => {
-    const { path, relativePath } = env;
+    const { path } = env;
 
-    if (typeof path !== 'string' || typeof relativePath !== 'string') {
+    if (typeof path !== 'string') {
       return render(src, env);
     }
 
@@ -43,7 +45,7 @@ const editHistory: PluginSimple = (md) => {
     const hash = lastModified ? lastModified.split(' ')[0] : undefined;
 
     const permalink = hash
-      ? `${REPO_URL}/blob/${hash}/${relativePath}`
+      ? `${REPO_URL}/blob/${hash}/${relative(cwd(), path)}`
       : undefined;
 
     const modifiedDate = lastModified ? lastModified.split(' ')[1] : undefined;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress';
 import TableOfContents from './TableOfContents.vue';
+import PostMetaData from './PostMetaData.vue';
 
 const { frontmatter } = useData();
 </script>
@@ -10,7 +11,14 @@ const { frontmatter } = useData();
       <div class="px-4">
         <header>
           <h1 class="font-bold text-3xl my-8">{{ frontmatter.title }}</h1>
-          <div class="my-8">todo: post meta</div>
+          <div class="my-8">
+            <PostMetaData
+              :date="frontmatter.date"
+              :modified-date="frontmatter.modifiedDate"
+              :permalink="frontmatter.permalink"
+              :hash="frontmatter.hash"
+            />
+          </div>
         </header>
         <article class="prose mb-16 max-w-none prose-slate">
           <Content />

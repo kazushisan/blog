@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PostMetaData from './PostMetaData.vue';
 import { data as posts } from './posts.data.js';
 </script>
 
@@ -14,7 +15,12 @@ import { data as posts } from './posts.data.js';
           <a :href="post.url">
             <h1 class="font-bold text-xl mb-4">{{ post.title }}</h1>
           </a>
-          <!-- todo: add post meta -->
+          <PostMetaData
+            :date="post.date"
+            :modified-date="post.modifiedDate"
+            :permalink="post.permalink"
+            :hash="post.hash"
+          />
         </div>
       </div>
     </div>
