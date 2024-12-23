@@ -5,8 +5,8 @@ import './style.css'
 
 export default {
   Layout,
-  enhanceApp({ app, router, siteData }) {
-    // ...
-  }
+  // enhanceApp({ app, router, siteData }) {
+  //   // ...
+  // }
 } satisfies Theme
 

@@ -10,7 +10,8 @@
     "lint": "eslint",
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "check": "vue-tsc"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
