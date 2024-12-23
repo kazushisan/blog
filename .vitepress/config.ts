@@ -18,7 +18,7 @@ export default defineConfig({
     },
     theme: 'nord',
   },
-  scrollOffset: 32,
+  scrollOffset: 24,
   cleanUrls: true,
 });
 
