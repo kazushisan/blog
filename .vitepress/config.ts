@@ -16,6 +16,7 @@ export default defineConfig({
       md.use(footnote);
       md.use(editHistory);
     },
+    theme: 'nord',
   },
   scrollOffset: 32,
   cleanUrls: true,
