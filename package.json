@@ -5,12 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx scripts/server.ts",
-    "build": "tsx scripts/build.ts",
     "lint": "eslint",
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
     "check": "vue-tsc"
   },
   "author": "Kazushi Konosu",
