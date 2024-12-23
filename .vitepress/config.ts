@@ -8,4 +8,5 @@ export default defineConfig({
     math: true,
     headers: true,
   },
+  scrollOffset: 32,
 });
