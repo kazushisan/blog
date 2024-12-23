@@ -15,3 +15,5 @@ yarn-error.log
 .vscode/
 
 dist/
+.vitepress/dist
+.vitepress/cache

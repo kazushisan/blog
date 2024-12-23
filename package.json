@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "tsx scripts/server.ts",
     "build": "tsx scripts/build.ts",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
