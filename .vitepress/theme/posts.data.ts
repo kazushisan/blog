@@ -31,9 +31,7 @@ const formatDate = (raw: string) => {
   return {
     timestamp: date.getTime(),
     string: date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+      dateStyle: 'long',
     }),
   };
 };
