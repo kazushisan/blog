@@ -3,15 +3,52 @@ import { useData } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
 
-// https://vitepress.dev/reference/runtime-api#usedata
 const { site, frontmatter } = useData();
 </script>
 
 <template>
-  <div v-if="frontmatter.home">
-    <h1>{{ site.title }}</h1>
-    <p>{{ site.description }}</p>
-    <Home />
+  <div>
+    <header>
+      <div
+        :class="`container md:mx-auto max-w-4xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
+      >
+        <div class="p-4 flex justify-start items-center">
+          <a href="/">
+            <h1 class="font-bold text-lg">{{ site.title }}</h1></a
+          >
+        </div>
+      </div>
+    </header>
+    <Home v-if="frontmatter.home" />
+    <Post v-else />
+    <footer>
+      <div
+        :class="`container md:mx-auto max-w-4xl box-content py-16 ${
+          frontmatter.home ? '' : 'xl:pr-72'
+        }`"
+      >
+        <div class="p-4">
+          <div>
+            <h3 class="font-bold text-lg">{{ site.title }}</h3>
+            <p>
+              <a href="https://github.com/kazushisan/gadgetlunatic">
+                github.com/kazushisan/gadgetlunatic
+              </a>
+            </p>
+          </div>
+          <div class="mt-4">
+            <p>
+              © 2024
+              <a
+                class="text-blue-500 hover:text-blue"
+                href="https://x.com/kazushikonosu"
+              >
+                @kazushikonosu
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
-  <Post v-else />
 </template>
