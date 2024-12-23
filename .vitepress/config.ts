@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import footnote from 'markdown-it-footnote';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -7,6 +8,9 @@ export default defineConfig({
   markdown: {
     math: true,
     headers: true,
+    config: (md) => {
+      md.use(footnote);
+    },
   },
   scrollOffset: 32,
 });
