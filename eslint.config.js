@@ -1,17 +1,18 @@
 import eslint from '@eslint/js';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import prettier from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
+import pluginVue from 'eslint-plugin-vue';
+import pluginVueTs from '@vue/eslint-config-typescript';
 
 export default tseslint.config(
   {
-    files: ['**/*.{js,ts,jsx,tsx}'],
-  },
-  {
-    ignores: ['dist'],
+    ignores: ['dist', '.vitepress/cache'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
-  eslintPluginPrettierRecommended,
+  ...pluginVue.configs['flat/recommended'],
+  ...pluginVueTs(),
+  prettier,
   {
     rules: {
       'prefer-template': 'error',
