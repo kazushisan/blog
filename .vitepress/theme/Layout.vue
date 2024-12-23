@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress';
 import Home from './Home.vue';
+import Post from './Post.vue';
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { site, frontmatter } = useData();
@@ -12,8 +13,5 @@ const { site, frontmatter } = useData();
     <p>{{ site.description }}</p>
     <Home />
   </div>
-  <div v-else>
-    <a href="/">Home</a>
-    <Content />
-  </div>
+  <Post v-else />
 </template>
