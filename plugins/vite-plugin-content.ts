@@ -90,15 +90,14 @@ function content() {
         }
         case 'posts': {
           if (serve) {
-            return `
-            import { query } from '${internalPrefix}${target}';
-            const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
-            const list = Object.entries(files).map(([path, data]) => ({
-              path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
-              data,
-            }));
-            const result = query(list);
-            export default result;
+            return `import { query } from '${internalPrefix}${target}';
+const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
+const list = Object.entries(files).map(([path, data]) => ({
+  path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
+  data,
+}));
+const result = query(list);
+export default result;
             `;
           }
 
