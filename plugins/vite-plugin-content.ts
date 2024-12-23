@@ -1,4 +1,3 @@
-import { toJs } from 'estree-util-to-js';
 import { globSync } from 'glob';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,68 +12,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
 
 const configPath = resolve(projectRoot, './content.config.js');
-
-const generateExportCode = (routes: { path: string; file: string }[]) =>
-  toJs({
-    type: 'Program',
-    body: [
-      {
-        type: 'ExportDefaultDeclaration',
-        declaration: {
-          type: 'ArrayExpression',
-          elements: routes.map(({ path, file }) => ({
-            type: 'ObjectExpression',
-            properties: [
-              {
-                type: 'Property',
-                method: false,
-                shorthand: false,
-                computed: false,
-                key: {
-                  type: 'Identifier',
-                  name: 'path',
-                },
-                value: {
-                  type: 'Literal',
-                  value: `${path}`,
-                  raw: `'${path}'`,
-                },
-                kind: 'init',
-              },
-              {
-                type: 'Property',
-                method: false,
-                shorthand: false,
-                computed: false,
-                key: {
-                  type: 'Identifier',
-                  name: 'load',
-                },
-                value: {
-                  type: 'ArrowFunctionExpression',
-                  id: null,
-                  expression: true,
-                  generator: false,
-                  async: false,
-                  params: [],
-                  body: {
-                    type: 'ImportExpression',
-                    source: {
-                      type: 'Literal',
-                      value: `${file}`,
-                      raw: `'${file}'`,
-                    },
-                  },
-                },
-                kind: 'init',
-              },
-            ],
-          })),
-        },
-      },
-    ],
-    sourceType: 'module',
-  }).value;
 
 async function extractFromFile(this: PluginContext, file: string) {
   const resolution = await this.resolve(file, undefined, {
@@ -140,7 +77,14 @@ function content() {
           file: `/${file}`,
         }));
 
-        return generateExportCode(routes);
+        const items = routes
+          .map(
+            ({ path, file }) =>
+              `{ path: '${path}', load: () => import('${file}') }`,
+          )
+          .join(', ');
+
+        return `export default [${items}];`;
       }
 
       if (target !== 'posts') {
