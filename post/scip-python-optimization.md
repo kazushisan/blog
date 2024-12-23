@@ -44,11 +44,11 @@ Pythonで最適化問題を解くためには、Pyomoによってモデルを記
 
 https://www.scipopt.org/index.php#download より、SCIPのOSとバージョンを選択して、プルダウンの下にある `scipoptsuite-{version}.tgz` のリンクをクリックします。
 
-![SCIPのOSバージョンを選択](scip-download-pulldown.png)
+![SCIPのOSバージョンを選択](../image/scip-download-pulldown.png)
 
 クリックすると、商用目的の利用ではないことを確認するチェックボックスと利用者の名前などの入力を促すページに遷移するので、入力を行いダウンロードします。
 
-![SCIPのダウンロードページ](scip-download-page.png)
+![SCIPのダウンロードページ](../image/scip-download-page.png)
 
 ### ビルド
 

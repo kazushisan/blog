@@ -88,7 +88,7 @@ sudo ./install-tl -no-gui --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/t
 
 インストーラにしたがって、オプションを選択します。MacのBasicTeXに準じている`small scheme`を選びました。他のオプションはそのままでインストールします。
 
-![インストーラ画面](tex-installer.png)
+![インストーラ画面](../image/tex-installer.png)
 
 インストーラの動作が終了したら以下のコマンドでパスを通し、日本語環境とghostscriptをインストールして完了です。
 
@@ -136,7 +136,7 @@ sudo tlmgr install enumitem
 
 `\begin{document}`以前がプリアンブル、`\begin{document} \end{document}`で囲まれた部分に実際の内容を書きます。保存したディレクトリで`lualatex article` を実行すると `article.pdf` をはじめとしたファイルが生成されます。
 
-![コマンドの実行](execute-command.png)
+![コマンドの実行](../image/execute-command.png)
 
 今後はこのファイルに追記します。
 
@@ -188,7 +188,7 @@ sudo tlmgr install enumitem
 
 この出力結果は次のようになります。
 
-![箇条書きの出力](list-output.png)
+![箇条書きの出力](../image/list-output.png)
 
 箇条書きのスタイルを変更するには、プリアンブルに`\usepackage{enumitem}`を追加したうえで、オプションを指定します。
 
@@ -231,7 +231,7 @@ sudo tlmgr install enumitem
 
 PDFを生成すると、次のような結果が得られます。
 
-![基本的なコマンドを使ったファイル](basic-output.png)
+![基本的なコマンドを使ったファイル](../image/basic-output.png)
 
 ## ページの設定
 
@@ -347,7 +347,7 @@ f(x)= \left\{
 
 生成されるファイルは以下のようになります。
 
-![見出しのカスタマイズ2](customize-headings-2.png)
+![見出しのカスタマイズ2](../image/customize-headings-2.png)
 
 ### 箇条書き
 
@@ -371,7 +371,7 @@ f(x)= \left\{
 
 出力結果は、次のようになります。
 
-![箇条書きのカスタマイズ](customize-list.png)
+![箇条書きのカスタマイズ](../image/customize-list.png)
 
 ## おわりに
 
@@ -420,7 +420,7 @@ f(x)= \left\{
 
 このファイルをコンパイルすると次のようになります。
 
-![短いレポート](mini-report-example.png)
+![短いレポート](../image/mini-report-example.png)
 
 このメモがなにかの役にたてば幸いです。
 

@@ -20,7 +20,7 @@ MacでGurobiのダウンロード・インストール・アカデミックラ�
 
 https://pages.gurobi.com/registration からGurobiのアカウントを発行できます。`Academic` をプルダウンから選択した上で、メールアドレスには `.ac.jp` ドメインのものを設定しました。
 
-![登録画面](gurobi-register.png)
+![登録画面](../image/gurobi-register.png)
 
 指定したメールアドレスにパスワード設定用のリンクを含むメールが飛んできます。パスワードを設定したら https://www.gurobi.com/account/ にログインします。
 
@@ -28,14 +28,14 @@ https://pages.gurobi.com/registration からGurobiのアカウントを発行で
 
 Gurobiの公式サイトにログインできたら、右上のメニューより、`Download & Licenses` > `Academic License` を選択するか https://www.gurobi.com/downloads/end-user-license-agreement-academic/ にアクセスすることでアカデミックライセンスを発行できます。同意するとすぐにライセンスが発行されます。
 
-![ライセンスの発行画面](gurobi-license.png)
+![ライセンスの発行画面](../image/gurobi-license.png)
 
 
 ### ダウンロード
 
 http://www.gurobi.com/downloads/gurobi-optimizer からダウンロードできます。macOS用の `.pkg` ファイルをダウンロードして、実行します。
 
-![インストーラの画面](gurobi-installer.png)
+![インストーラの画面](../image/gurobi-installer.png)
 
 ### ライセンスの有効化
 

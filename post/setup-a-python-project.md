@@ -21,7 +21,7 @@ date: 2020-04-01T06:57:17+09:00
 
 はじめにmacOSに標準でインストールされているPythonのバージョンを確認してみましょう。
 
-![システムのPythonバージョン](python-version.png)
+![システムのPythonバージョン](../image/python-version.png)
 
 古くてつらいので、別途Pythonをインストールします。HomebrewからPythonを直接インストールすることもできますが、プロジェクトによって使い分けるためにもPython自体のバージョンを切り替えるツールを使います。Node.jsの`nvm`やRubyの`rbenv`と同様です。
 
