@@ -4,4 +4,7 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'My Awesome Project',
   description: 'A VitePress Site',
+  markdown: {
+    math: true,
+  },
 });

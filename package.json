@@ -36,6 +36,7 @@
     "glob": "^10.2.2",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
+    "markdown-it-mathjax3": "^4.3.2",
     "prettier": "^3.4.2",
     "rehype-heading-anchor": "^0.1.0",
     "rehype-katex": "^6.0.2",
