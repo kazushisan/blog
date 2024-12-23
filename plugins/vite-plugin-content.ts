@@ -70,48 +70,51 @@ function content() {
       const target = id.slice(`\0${prefix}`.length);
       const files = globSync('./content/**/*.{md,mdx}');
 
-      // use the same logic for serve and build
-      if (target === 'routes') {
-        const routes = files.map((file) => ({
-          path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
-          file: `/${file}`,
-        }));
+      switch (target) {
+        case 'routes': {
+          // use the same logic for serve and build
 
-        const items = routes
-          .map(
-            ({ path, file }) =>
-              `{ path: '${path}', load: () => import('${file}') }`,
-          )
-          .join(', ');
+          const routes = files.map((file) => ({
+            path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
+            file: `/${file}`,
+          }));
 
-        return `export default [${items}];`;
+          const items = routes
+            .map(
+              ({ path, file }) =>
+                `{ path: '${path}', load: () => import('${file}') }`,
+            )
+            .join(', ');
+
+          return `export default [${items}];`;
+        }
+        case 'posts': {
+          if (serve) {
+            return `
+            import { query } from '${internalPrefix}${target}';
+            const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
+            const list = Object.entries(files).map(([path, data]) => ({
+              path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
+              data,
+            }));
+            const result = query(list);
+            export default result;
+            `;
+          }
+
+          const list = await Promise.all(
+            files.map((file) => extractFromFile.call(this, file)),
+          );
+
+          const { query } = await import(configPath);
+          const result = query(list);
+
+          return `export default ${stringifyObject(result)}`;
+        }
+        default: {
+          return null;
+        }
       }
-
-      if (target !== 'posts') {
-        return null;
-      }
-
-      if (serve) {
-        return `
-        import { query } from '${internalPrefix}${target}';
-        const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
-        const list = Object.entries(files).map(([path, data]) => ({
-          path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
-          data,
-        }));
-        const result = query(list);
-        export default result;
-        `;
-      }
-
-      const list = await Promise.all(
-        files.map((file) => extractFromFile.call(this, file)),
-      );
-
-      const { query } = await import(configPath);
-      const result = query(list);
-
-      return `export default ${stringifyObject(result)}`;
     },
   } satisfies PluginOption;
 }
