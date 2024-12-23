@@ -17,6 +17,7 @@ export default tseslint.config(
     rules: {
       'prefer-template': 'error',
       'arrow-body-style': ['error', 'as-needed'],
+      'vue/multi-word-component-names': 'off',
     },
   },
 );
