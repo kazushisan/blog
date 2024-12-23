@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 const formatDateFromIso = (value: string) =>
   new Intl.DateTimeFormat('en-US', {
     dateStyle: 'long',
@@ -24,7 +22,7 @@ export const PostMeta = ({
       </span>
     )}
     {permalink && hash ? (
-      <Fragment>
+      <>
         <span className="before:content-['·'] before:px-1">latest commit </span>
         <a
           className="bg-slate-50 inline- text-sm text-slate-700 inline-block border-slate-200 border rounded-sm px-1 font-mono ml-1 align-top"
@@ -34,7 +32,7 @@ export const PostMeta = ({
         >
           {hash.slice(0, 7)}
         </a>
-      </Fragment>
+      </>
     ) : null}
   </div>
 );
