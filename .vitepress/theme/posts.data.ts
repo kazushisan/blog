@@ -71,16 +71,18 @@ export default {
       raw.push(data);
     }
 
-    return raw.map(
-      (data) =>
-        ({
-          title: data.frontmatter.title,
-          url: data.url,
-          date: data.frontmatter.date,
-          permalink: data.frontmatter.permalink,
-          modifiedDate: data.frontmatter.modifiedDate,
-          hash: data.frontmatter.hash,
-        }) satisfies Post,
-    );
+    return raw
+      .map(
+        (data) =>
+          ({
+            title: data.frontmatter.title,
+            url: data.url,
+            date: data.frontmatter.date,
+            permalink: data.frontmatter.permalink,
+            modifiedDate: data.frontmatter.modifiedDate,
+            hash: data.frontmatter.hash,
+          }) satisfies Post,
+      )
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   },
 } satisfies LoaderModule;
