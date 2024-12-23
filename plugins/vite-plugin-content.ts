@@ -6,7 +6,6 @@ import { PluginOption } from 'vite';
 import type { PluginContext } from 'rollup';
 
 const prefix = 'content:';
-const internalPrefix = 'content-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
@@ -56,7 +55,7 @@ function content() {
         return `\0${source}`;
       }
 
-      if (source === `${internalPrefix}posts`) {
+      if (source === `${prefix}config`) {
         return configPath;
       }
 
@@ -90,7 +89,7 @@ function content() {
         }
         case 'posts': {
           if (serve) {
-            return `import { query } from '${internalPrefix}${target}';
+            return `import { query } from '${prefix}config';
 const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
 const list = Object.entries(files).map(([path, data]) => ({
   path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
