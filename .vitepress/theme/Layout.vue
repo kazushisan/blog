@@ -20,7 +20,7 @@ const { site, frontmatter, page } = useData();
       </div>
     </header>
     <Home v-if="frontmatter.home" />
-    <Post v-if="page.relativePath.startsWith('/post')" />
+    <Post v-if="page.relativePath.startsWith('post')" />
     <footer>
       <div
         :class="`container md:mx-auto max-w-4xl box-content py-16 ${
