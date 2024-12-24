@@ -2,8 +2,10 @@
 import { useData } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
+import { useLocale } from './locale';
 
 const { site, frontmatter, page } = useData();
+const locale = useLocale();
 </script>
 
 <template>
@@ -13,9 +15,19 @@ const { site, frontmatter, page } = useData();
         :class="`container md:mx-auto max-w-4xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
       >
         <div class="p-4 flex justify-start items-center">
-          <a href="/">
-            <h1 class="font-bold text-lg">{{ site.title }}</h1></a
-          >
+          <a :href="`/${locale}`">
+            <h1 class="font-bold text-lg">{{ site.title }}</h1>
+          </a>
+          <div class="flex gap-1 ml-4">
+            <a
+              v-for="(_, k) in site.locales"
+              :key="k"
+              :href="`/${k}`"
+              :class="`flex-1 font-sans ${k === locale ? 'text-slate-900' : 'text-slate-400'}`"
+            >
+              {{ k }}
+            </a>
+          </div>
         </div>
       </div>
     </header>
