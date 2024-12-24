@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import footnote from 'markdown-it-footnote';
 import type { PluginSimple } from 'markdown-it';
 import { execSync } from 'node:child_process';
 import { basename, relative } from 'node:path';
 import { cwd } from 'node:process';
-import { defineConfig } from 'vitepress';
+import { createMarkdownRenderer, defineConfig, SiteConfig } from 'vitepress';
 import { ImageResponse } from '@vercel/og';
 import { Plugin } from 'vite';
 
@@ -82,15 +83,24 @@ const generatedOgImage = new Map<string, string>();
 const og = (): Plugin => ({
   name: 'og',
   apply: 'build',
-  async transform(_, id) {
+  async transform(code, id) {
     if (!id.endsWith('.md')) {
       return null;
     }
 
-    const frontmatter = {
-      title: 'テスト',
-      date: '2024-12-24',
-    };
+    const config: SiteConfig = (global as any).VITEPRESS_CONFIG;
+    const md = await createMarkdownRenderer(
+      config.srcDir,
+      config.markdown,
+      config.site.base,
+      config.logger,
+    );
+
+    const env: Record<string, any> = {};
+
+    md.render(code, env);
+
+    const frontmatter = env.frontmatter as Record<string, any>;
 
     const source = await ogImage({
       title: frontmatter.title,
