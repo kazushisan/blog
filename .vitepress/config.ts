@@ -2,9 +2,14 @@
 import footnote from 'markdown-it-footnote';
 import type { PluginSimple } from 'markdown-it';
 import { execSync } from 'node:child_process';
-import { basename, relative } from 'node:path';
+import { basename, join, relative } from 'node:path';
 import { cwd } from 'node:process';
-import { createMarkdownRenderer, defineConfig, SiteConfig } from 'vitepress';
+import {
+  createMarkdownRenderer,
+  defineConfig,
+  HeadConfig,
+  SiteConfig,
+} from 'vitepress';
 import { ImageResponse } from '@vercel/og';
 import { Plugin } from 'vite';
 
@@ -78,7 +83,9 @@ const ogImage = async ({ title }: { title: string; date: string }) => {
   return Buffer.from(await response.arrayBuffer());
 };
 
-const generatedOgImage = new Map<string, string>();
+const generatedImage = new Map<string, { referenceId: string; url?: string }>();
+
+const baseUrl = 'https://gadgetlunatic.com';
 
 const og = (): Plugin => ({
   name: 'og',
@@ -107,15 +114,23 @@ const og = (): Plugin => ({
       date: frontmatter.date,
     });
 
-    const name = this.emitFile({
+    const referenceId = this.emitFile({
       type: 'asset',
       name: `${basename(id, '.md')}.png`,
       source,
     });
 
-    generatedOgImage.set(id, name);
+    generatedImage.set(id, { referenceId });
 
     return null;
+  },
+  generateBundle() {
+    for (const [id, { referenceId }] of generatedImage) {
+      generatedImage.set(id, {
+        referenceId,
+        url: this.getFileName(referenceId),
+      });
+    }
   },
   enforce: 'pre',
 });
@@ -138,4 +153,56 @@ export default defineConfig({
   scrollOffset: 24,
   cleanUrls: true,
   srcExclude: ['README.md'],
+  transformHead(context) {
+    const url = `${baseUrl}/${context.pageData.filePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, context.siteConfig.cleanUrls ? '' : '.html')}`;
+
+    const result: HeadConfig[] = [
+      [
+        'meta',
+        {
+          property: 'og:title',
+          content: context.title,
+        },
+      ],
+      [
+        'meta',
+        {
+          property: 'og:url',
+          // todo: consider a better way to get the url
+          // @see https://github.com/vuejs/vitepress/blob/3eb4374af286362d7f4257b288fd2d5b9173dcba/src/node/contentLoader.ts#L142
+          content: url,
+        },
+      ],
+      [
+        'meta',
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+      ],
+    ];
+
+    const key = join(context.siteConfig.srcDir, context.pageData.filePath);
+    const value = generatedImage.get(key);
+
+    if (value?.url) {
+      result.push(
+        [
+          'meta',
+          {
+            property: 'og:image',
+            content: join('/', value.url),
+          },
+        ],
+        [
+          'meta',
+          {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+          },
+        ],
+      );
+    }
+    return result;
+  },
 });
