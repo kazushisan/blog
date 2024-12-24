@@ -20,6 +20,7 @@ export default defineConfig({
   },
   scrollOffset: 24,
   cleanUrls: true,
+  srcExclude: ['README.md'],
 });
 
 const REPO_URL = 'https://github.com/kazushisan/gadgetlunatic';
