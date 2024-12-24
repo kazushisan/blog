@@ -1,7 +1,7 @@
 import footnote from 'markdown-it-footnote';
 import { defineConfig, HeadConfig } from 'vitepress';
-import { ogImagePlugin } from './og-image-plugin';
-import { editHistory } from './edit-history';
+import { ogImagePlugin } from './ogImage';
+import { editHistory } from './editHistory';
 
 const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
 const baseUrl = 'https://gadgetlunatic.com';
