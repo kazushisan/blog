@@ -1,12 +1,12 @@
 import footnote from 'markdown-it-footnote';
 import { defineConfig } from 'vitepress';
-import { Og } from './og';
+import { Ogp } from './ogp';
 import { editHistory } from './editHistory';
 
 const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
 const baseUrl = 'https://gadgetlunatic.com';
 
-const og = new Og({ baseUrl });
+const ogp = new Ogp({ baseUrl });
 
 export default defineConfig({
   title: 'gadgetlunatic',
@@ -21,12 +21,12 @@ export default defineConfig({
     theme: 'nord',
   },
   vite: {
-    plugins: [og.vitePlugin()],
+    plugins: [ogp.vitePlugin()],
   },
   scrollOffset: 24,
   cleanUrls: true,
   srcExclude: ['README.md'],
   transformHead(context) {
-    return og.tags(context);
+    return ogp.tags(context);
   },
 });

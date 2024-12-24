@@ -38,7 +38,7 @@ const image = async ({ title }: { title: string; date: string }) => {
   return Buffer.from(await response.arrayBuffer());
 };
 
-export class Og {
+export class Ogp {
   generatedImage = new Map<string, { referenceId: string; url?: string }>();
   baseUrl: string;
 
