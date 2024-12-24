@@ -36,7 +36,7 @@ dummyパッケージについてはあまりスマートな解決方法ではな
 
 [texlive-dummyのソースコード](https://github.com/zhou13/aur/blob/master/texlive-dummy/PKGBUILD)を見てみると、
 
-```:PKGBUILD
+```bash
 conflicts=('texlive-bin' $(pacman -Sgq texlive-most texlive-lang))
 provides=('texlive-bin' $(pacman -Sgq texlive-most texlive-lang))
 ```
