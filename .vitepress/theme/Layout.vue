@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { useData } from 'vitepress';
+import { useData, useRoute } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
 
-const { site, frontmatter, page } = useData();
+const { site, frontmatter } = useData();
+const { path } = useRoute();
 </script>
 
 <template>
-  <div>
+  <div v-if="path !== '/'">
     <header>
       <div
         :class="`container md:mx-auto max-w-4xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
@@ -20,7 +21,7 @@ const { site, frontmatter, page } = useData();
       </div>
     </header>
     <Home v-if="frontmatter.home" />
-    <Post v-if="page.relativePath.startsWith('post')" />
+    <Post v-else />
     <footer>
       <div
         :class="`container md:mx-auto max-w-4xl box-content py-16 ${

@@ -29,4 +29,14 @@ export default defineConfig({
   transformHead(context) {
     return ogp.tags(context);
   },
+  locales: {
+    ja: {
+      label: '日本語',
+      lang: 'ja-JP',
+    },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+    },
+  },
 });

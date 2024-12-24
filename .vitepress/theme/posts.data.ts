@@ -13,7 +13,7 @@ type Post = {
   hash?: string;
 };
 
-declare const data: Post[];
+declare const data: { [locale: string]: Post[] };
 
 export { data };
 
@@ -31,7 +31,7 @@ type Data = {
 };
 
 export default {
-  watch: 'post/*.md',
+  watch: '**/*.md',
   async load(files) {
     const md = await createMarkdownRenderer(
       config.srcDir,
@@ -40,14 +40,19 @@ export default {
       config.logger,
     );
 
-    const raw: Data[] = [];
+    const raw: { [locale: string]: Data[] } = {};
+
+    Object.keys(config.site.locales).forEach((locale) => {
+      raw[locale] = [];
+    });
 
     for (const file of files) {
       const timestamp = fs.statSync(file).mtimeMs;
       const cached = cache.get(file);
+      const locale = file.split('/')[0];
 
-      if (cached && timestamp === cached.timestamp) {
-        raw.push(cached.data);
+      if (cached && timestamp === cached.timestamp && locale in raw) {
+        raw[locale].push(cached.data);
         continue;
       }
 
@@ -67,22 +72,36 @@ export default {
         url,
       };
 
-      cache.set(file, { data, timestamp });
-      raw.push(data);
+      if ((env.frontmatter as any).home) {
+        continue;
+      }
+
+      if (locale in raw) {
+        cache.set(file, { data, timestamp });
+        raw[locale].push(data);
+      }
     }
 
-    return raw
-      .map(
-        (data) =>
-          ({
-            title: data.frontmatter.title,
-            url: data.url,
-            date: data.frontmatter.date,
-            permalink: data.frontmatter.permalink,
-            modifiedDate: data.frontmatter.modifiedDate,
-            hash: data.frontmatter.hash,
-          }) satisfies Post,
-      )
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return Object.entries(raw).reduce(
+      (acc, [locale, value]) => ({
+        ...acc,
+        [locale]: value
+          .map(
+            (data) =>
+              ({
+                title: data.frontmatter.title,
+                url: data.url,
+                date: data.frontmatter.date,
+                permalink: data.frontmatter.permalink,
+                modifiedDate: data.frontmatter.modifiedDate,
+                hash: data.frontmatter.hash,
+              }) satisfies Post,
+          )
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          ),
+      }),
+      {} as { [local: string]: Post[] },
+    );
   },
 } satisfies LoaderModule;

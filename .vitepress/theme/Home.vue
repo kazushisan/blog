@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import PostMetaData from './PostMetaData.vue';
-import { data as posts } from './posts.data.js';
+import { data } from './posts.data.js';
+import { computed } from 'vue';
+import { useLocale } from './locale';
+
+const locale = useLocale();
+const posts = computed(() => data[locale.value]);
 </script>
 
 <template>
