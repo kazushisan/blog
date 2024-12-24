@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { useData, useRoute } from 'vitepress';
+import { useData } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
 
-const { site, frontmatter } = useData();
-const { path } = useRoute();
+const { site, frontmatter, page } = useData();
 </script>
 
 <template>
-  <div v-if="path !== '/'">
+  <div>
     <header>
       <div
         :class="`container md:mx-auto max-w-4xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
@@ -20,7 +19,13 @@ const { path } = useRoute();
         </div>
       </div>
     </header>
-    <Home v-if="frontmatter.home" />
+    <div
+      v-if="page.isNotFound"
+      className="container md:mx-auto max-w-4xl box-content xl:pr-72"
+    >
+      <div class="p-4 text-lg">404 Page Not Found</div>
+    </div>
+    <Home v-else-if="frontmatter.home" />
     <Post v-else />
     <footer>
       <div
