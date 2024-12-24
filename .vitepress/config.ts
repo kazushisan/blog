@@ -1,52 +1,9 @@
-import type { PluginSimple } from 'markdown-it';
 import footnote from 'markdown-it-footnote';
-import { execSync } from 'node:child_process';
-import { relative } from 'node:path';
-import { cwd } from 'node:process';
 import { defineConfig, HeadConfig } from 'vitepress';
 import { ogImagePlugin } from './og-image-plugin';
+import { editHistory } from './edit-history';
 
-const REPO_URL = 'https://github.com/kazushisan/gadgetlunatic';
-
-const editHistory: PluginSimple = (md) => {
-  const render = md.render.bind(md);
-
-  md.render = (src, env) => {
-    const { path } = env;
-
-    if (typeof path !== 'string') {
-      return render(src, env);
-    }
-
-    const history = execSync(
-      `git log --follow --pretty=format:"%H %cd %s" --date=iso-strict -- ${path}`,
-    )
-      .toString()
-      .split('\n');
-
-    const lastModified = history.find(
-      (line) => !line.includes('[skip modified]'),
-    );
-
-    const hash = lastModified ? lastModified.split(' ')[0] : undefined;
-
-    const permalink = hash
-      ? `${REPO_URL}/blob/${hash}/${relative(cwd(), path)}`
-      : undefined;
-
-    const modifiedDate = lastModified ? lastModified.split(' ')[1] : undefined;
-
-    env.frontmatter = {
-      ...env.frontmatter,
-      hash,
-      permalink,
-      modifiedDate,
-    };
-
-    return render(src, env);
-  };
-};
-
+const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
 const baseUrl = 'https://gadgetlunatic.com';
 
 const ogImage = ogImagePlugin();
@@ -59,7 +16,7 @@ export default defineConfig({
     headers: true,
     config: (md) => {
       md.use(footnote);
-      md.use(editHistory);
+      md.use(editHistory, { repositoryUrl });
     },
     theme: 'nord',
   },
