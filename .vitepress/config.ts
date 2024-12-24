@@ -1,12 +1,12 @@
 import footnote from 'markdown-it-footnote';
 import { defineConfig, HeadConfig } from 'vitepress';
-import { ogImagePlugin } from './ogImage';
+import { OgImage } from './og';
 import { editHistory } from './editHistory';
 
 const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
 const baseUrl = 'https://gadgetlunatic.com';
 
-const ogImage = ogImagePlugin();
+const ogImage = new OgImage();
 
 export default defineConfig({
   title: 'gadgetlunatic',
@@ -21,7 +21,7 @@ export default defineConfig({
     theme: 'nord',
   },
   vite: {
-    plugins: [ogImage.vitePlugin],
+    plugins: [ogImage.vitePlugin()],
   },
   scrollOffset: 24,
   cleanUrls: true,
