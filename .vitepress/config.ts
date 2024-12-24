@@ -39,4 +39,5 @@ export default defineConfig({
       lang: 'en-US',
     },
   },
+  lang: 'ja-JP',
 });
