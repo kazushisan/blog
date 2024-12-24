@@ -38,8 +38,13 @@ const image = async ({ title }: { title: string; date: string }) => {
   return Buffer.from(await response.arrayBuffer());
 };
 
-export class OgImage {
+export class Og {
   generatedImage = new Map<string, { referenceId: string; url?: string }>();
+  baseUrl: string;
+
+  constructor({ baseUrl }: { baseUrl: string }) {
+    this.baseUrl = baseUrl;
+  }
 
   vitePlugin(): Plugin {
     const { generatedImage } = this;
@@ -97,18 +102,57 @@ export class OgImage {
     };
   }
 
-  get(context: TransformContext) {
+  tags(context: TransformContext) {
     const key = join(context.siteConfig.srcDir, context.pageData.filePath);
     const value = this.generatedImage.get(key);
 
-    return value && value.url
-      ? ([
+    // todo: consider a better way to get the url
+    // @see https://github.com/vuejs/vitepress/blob/3eb4374af286362d7f4257b288fd2d5b9173dcba/src/node/contentLoader.ts#L142
+    const url = `${this.baseUrl}/${context.pageData.filePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, context.siteConfig.cleanUrls ? '' : '.html')}`;
+
+    const result: HeadConfig[] = [
+      [
+        'meta',
+        {
+          property: 'og:title',
+          content: context.title,
+        },
+      ],
+      [
+        'meta',
+        {
+          property: 'og:url',
+          content: url,
+        },
+      ],
+      [
+        'meta',
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+      ],
+    ];
+
+    if (value && value.url) {
+      result.push(
+        [
           'meta',
           {
             property: 'og:image',
             content: join(context.siteData.base || '/', value.url),
           },
-        ] satisfies HeadConfig)
-      : undefined;
+        ],
+        [
+          'meta',
+          {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+          },
+        ],
+      );
+    }
+
+    return result;
   }
 }
