@@ -40,4 +40,19 @@ export default defineConfig({
     },
   },
   lang: 'ja-JP',
+  transformPageData(pageData, context) {
+    let path = `${pageData.relativePath}`
+      .replace(/\/index\.md$/, '')
+      .replace(/\.md$/, context.siteConfig.cleanUrls ? '' : '.html');
+
+    if (path === 'ja') {
+      // special case: the ja index page should point to root
+      path = '';
+    }
+
+    const href = `${baseUrl}${path ? `/${path}` : ''}`;
+
+    pageData.frontmatter.head ??= [];
+    pageData.frontmatter.head.push(['link', { rel: 'canonical', href }]);
+  },
 });
