@@ -1,27 +1,11 @@
-import { defineConfig } from 'vitepress';
 import footnote from 'markdown-it-footnote';
 import type { PluginSimple } from 'markdown-it';
 import { execSync } from 'node:child_process';
-import { relative } from 'node:path';
+import { basename, relative } from 'node:path';
 import { cwd } from 'node:process';
-
-// https://vitepress.dev/reference/site-config
-export default defineConfig({
-  title: 'gadgetlunatic',
-  // description: ''
-  markdown: {
-    math: true,
-    headers: true,
-    config: (md) => {
-      md.use(footnote);
-      md.use(editHistory);
-    },
-    theme: 'nord',
-  },
-  scrollOffset: 24,
-  cleanUrls: true,
-  srcExclude: ['README.md'],
-});
+import { defineConfig } from 'vitepress';
+import { ImageResponse } from '@vercel/og';
+import { Plugin } from 'vite';
 
 const REPO_URL = 'https://github.com/kazushisan/gadgetlunatic';
 
@@ -63,3 +47,85 @@ const editHistory: PluginSimple = (md) => {
     return render(src, env);
   };
 };
+
+const ogImage = async ({ title }: { title: string; date: string }) => {
+  const response = new ImageResponse(
+    {
+      type: 'div',
+      props: {
+        style: {
+          fontSize: 40,
+          color: 'black',
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          padding: '50px 200px',
+          textAlign: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          a: 'hello',
+        },
+        children: `${title}`,
+      },
+    },
+    {
+      width: 1200,
+      height: 630,
+    },
+  );
+
+  return Buffer.from(await response.arrayBuffer());
+};
+
+const generatedOgImage = new Map<string, string>();
+
+const og = (): Plugin => ({
+  name: 'og',
+  apply: 'build',
+  async transform(_, id) {
+    if (!id.endsWith('.md')) {
+      return null;
+    }
+
+    const frontmatter = {
+      title: 'テスト',
+      date: '2024-12-24',
+    };
+
+    const source = await ogImage({
+      title: frontmatter.title,
+      date: frontmatter.date,
+    });
+
+    const name = this.emitFile({
+      type: 'asset',
+      name: `${basename(id, '.md')}.png`,
+      source,
+    });
+
+    generatedOgImage.set(id, name);
+
+    return null;
+  },
+  enforce: 'pre',
+});
+
+export default defineConfig({
+  title: 'gadgetlunatic',
+  // description: ''
+  markdown: {
+    math: true,
+    headers: true,
+    config: (md) => {
+      md.use(footnote);
+      md.use(editHistory);
+    },
+    theme: 'nord',
+  },
+  vite: {
+    plugins: [og()],
+  },
+  scrollOffset: 24,
+  cleanUrls: true,
+  srcExclude: ['README.md'],
+});
