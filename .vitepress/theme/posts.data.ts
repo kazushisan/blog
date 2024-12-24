@@ -60,7 +60,7 @@ export default {
 
       // @see https://github.com/vuejs/vitepress/blob/3eb4374af286362d7f4257b288fd2d5b9173dcba/src/node/contentLoader.ts#L142
       const url = `/${normalizePath(path.relative(config.srcDir, file))
-        .replace(/(^|\/)index\.md$/, '$1')
+        .replace(/\/index\.md$/, '')
         .replace(/\.md$/, config.cleanUrls ? '' : '.html')}`;
 
       const env: Record<string, unknown> = { path: file };
