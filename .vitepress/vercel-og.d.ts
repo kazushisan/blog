@@ -3,11 +3,11 @@ declare module '@vercel/og' {
     type: 'div';
     props: {
       style?: Record<string, string | number>;
-      children?: Element;
+      children?: Element | string;
     };
   }
 
   class ImageResponse extends Response {
-    constructor(Element, options?: ImageResponseOptions);
+    constructor(element: Element, options?: ImageResponseOptions);
   }
 }

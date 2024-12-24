@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import footnote from 'markdown-it-footnote';
 import type { PluginSimple } from 'markdown-it';
+import footnote from 'markdown-it-footnote';
 import { execSync } from 'node:child_process';
-import { basename, join, relative } from 'node:path';
+import { relative } from 'node:path';
 import { cwd } from 'node:process';
-import {
-  createMarkdownRenderer,
-  defineConfig,
-  HeadConfig,
-  SiteConfig,
-} from 'vitepress';
-import { ImageResponse } from '@vercel/og';
-import { Plugin } from 'vite';
+import { defineConfig, HeadConfig } from 'vitepress';
+import { ogImagePlugin } from './og-image-plugin';
 
 const REPO_URL = 'https://github.com/kazushisan/gadgetlunatic';
 
@@ -54,90 +47,9 @@ const editHistory: PluginSimple = (md) => {
   };
 };
 
-const ogImage = async ({ title }: { title: string; date: string }) => {
-  const response = new ImageResponse(
-    {
-      type: 'div',
-      props: {
-        style: {
-          fontSize: 40,
-          color: 'black',
-          background: 'white',
-          width: '100%',
-          height: '100%',
-          padding: '50px 200px',
-          textAlign: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          a: 'hello',
-        },
-        children: `${title}`,
-      },
-    },
-    {
-      width: 1200,
-      height: 630,
-    },
-  );
-
-  return Buffer.from(await response.arrayBuffer());
-};
-
-const generatedImage = new Map<string, { referenceId: string; url?: string }>();
-
 const baseUrl = 'https://gadgetlunatic.com';
 
-const og = (): Plugin => ({
-  name: 'og',
-  apply: 'build',
-  async transform(code, id) {
-    if (!id.endsWith('.md')) {
-      return null;
-    }
-
-    const config: SiteConfig = (global as any).VITEPRESS_CONFIG;
-    const md = await createMarkdownRenderer(
-      config.srcDir,
-      config.markdown,
-      config.site.base,
-      config.logger,
-    );
-
-    const env: Record<string, any> = {};
-
-    md.render(code, env);
-
-    const frontmatter = env.frontmatter as Record<string, any>;
-
-    if (frontmatter.home) {
-      return null;
-    }
-
-    const source = await ogImage({
-      title: frontmatter.title,
-      date: frontmatter.date,
-    });
-
-    const referenceId = this.emitFile({
-      type: 'asset',
-      name: `${basename(id, '.md')}.png`,
-      source,
-    });
-
-    generatedImage.set(id, { referenceId });
-
-    return null;
-  },
-  generateBundle() {
-    for (const [id, { referenceId }] of generatedImage) {
-      generatedImage.set(id, {
-        referenceId,
-        url: this.getFileName(referenceId),
-      });
-    }
-  },
-  enforce: 'pre',
-});
+const ogImage = ogImagePlugin();
 
 export default defineConfig({
   title: 'gadgetlunatic',
@@ -152,7 +64,7 @@ export default defineConfig({
     theme: 'nord',
   },
   vite: {
-    plugins: [og()],
+    plugins: [ogImage.vitePlugin],
   },
   scrollOffset: 24,
   cleanUrls: true,
@@ -186,27 +98,18 @@ export default defineConfig({
       ],
     ];
 
-    const key = join(context.siteConfig.srcDir, context.pageData.filePath);
-    const value = generatedImage.get(key);
+    const meta = ogImage.get(context);
 
-    if (value?.url) {
-      result.push(
-        [
-          'meta',
-          {
-            property: 'og:image',
-            content: join('/', value.url),
-          },
-        ],
-        [
-          'meta',
-          {
-            name: 'twitter:card',
-            content: 'summary_large_image',
-          },
-        ],
-      );
+    if (meta) {
+      result.push(meta, [
+        'meta',
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+      ]);
     }
+
     return result;
   },
 });
