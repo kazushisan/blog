@@ -109,6 +109,10 @@ const og = (): Plugin => ({
 
     const frontmatter = env.frontmatter as Record<string, any>;
 
+    if (frontmatter.home) {
+      return null;
+    }
+
     const source = await ogImage({
       title: frontmatter.title,
       date: frontmatter.date,
