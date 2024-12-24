@@ -3,7 +3,7 @@ import { useData } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
 
-const { site, frontmatter } = useData();
+const { site, frontmatter, page } = useData();
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const { site, frontmatter } = useData();
       </div>
     </header>
     <Home v-if="frontmatter.home" />
-    <Post v-else />
+    <Post v-if="page.relativePath.startsWith('/post')" />
     <footer>
       <div
         :class="`container md:mx-auto max-w-4xl box-content py-16 ${
