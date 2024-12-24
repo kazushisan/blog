@@ -10,7 +10,7 @@ const ogp = new Ogp({ baseUrl });
 
 export default defineConfig({
   title: 'gadgetlunatic',
-  // description: ''
+  description: 'Personal blog of Kazushi Konosu',
   markdown: {
     math: true,
     headers: true,

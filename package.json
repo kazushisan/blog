@@ -1,7 +1,7 @@
 {
   "name": "gadgetlunatic",
   "version": "0.0.1",
-  "description": "Personal Website",
+  "description": "Personal blog of Kazushi Konosu",
   "main": "index.js",
   "type": "module",
   "scripts": {
