@@ -247,7 +247,7 @@ export class Ogp {
           'meta',
           {
             property: 'og:image',
-            content: join(context.siteData.base || '/', value.url),
+            content: join(this.baseUrl, value.url),
           },
         ],
         [
