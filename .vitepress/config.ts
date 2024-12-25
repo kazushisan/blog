@@ -55,4 +55,17 @@ export default defineConfig({
     pageData.frontmatter.head ??= [];
     pageData.frontmatter.head.push(['link', { rel: 'canonical', href }]);
   },
+  sitemap: {
+    hostname: baseUrl,
+    transformItems(items) {
+      return items.map((item) => ({
+        ...item,
+        url: item.url.replace(/\/$/, ''),
+        links: item.links?.map((link) => ({
+          ...link,
+          url: link.url.replace(/\/$/, ''),
+        })),
+      }));
+    },
+  },
 });
