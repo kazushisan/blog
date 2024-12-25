@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint",
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "git fetch --unshallow || true; vitepress build",
     "preview": "vitepress preview",
     "check": "vue-tsc"
   },
