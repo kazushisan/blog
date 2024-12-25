@@ -12,3 +12,20 @@
   position: absolute;
   left: 0;
 }
+
+.prose [class^='language-'] {
+  position: relative;
+}
+
+.prose [class^='language-'] .copy {
+  display: none;
+}
+
+.prose [class^='language-'] .lang {
+  position: absolute;
+  inset: 4px 10px auto auto;
+  font-size: 0.75em;
+  color: #616e88;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+}
