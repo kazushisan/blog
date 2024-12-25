@@ -9,29 +9,86 @@ import {
 } from 'vitepress';
 import { basename, join } from 'node:path';
 
-const image = async ({ title }: { title: string; date: string }) => {
+const cache = new Map<string, ArrayBuffer>();
+
+const font = async (query: string) => {
+  if (cache.has(query)) {
+    return cache.get(query)!;
+  }
+
+  const googleFontUrl = `https://fonts.googleapis.com/css2?family=${query}`;
+
+  const css = await fetch(googleFontUrl).then((res) => res.text());
+
+  const url = css.match(
+    /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+  )?.[1];
+
+  if (!url) {
+    throw new Error('could not extract url');
+  }
+
+  const arrayBuffer = await fetch(url).then((res) => res.arrayBuffer());
+
+  cache.set(query, arrayBuffer);
+  return arrayBuffer;
+};
+
+const image = async ({ title, site }: { title: string; site: string }) => {
   const response = new ImageResponse(
     {
       type: 'div',
       props: {
         style: {
-          fontSize: 40,
-          color: 'black',
-          background: 'white',
           width: '100%',
           height: '100%',
-          padding: '50px 200px',
-          textAlign: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          a: 'hello',
+          boxSizing: 'border-box',
+          padding: '48px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          backgroundColor: '#fff',
+          fontFamily: 'Noto Sans JP',
         },
-        children: `${title}`,
+        children: [
+          {
+            type: 'div',
+            props: {
+              children: title,
+              style: {
+                fontSize: '64px',
+                fontWeight: 700,
+              },
+            },
+          },
+          {
+            type: 'div',
+            props: {
+              children: site,
+              style: {
+                fontSize: '48px',
+                color: '#64748b',
+              },
+            },
+          },
+        ],
       },
     },
     {
       width: 1200,
       height: 630,
+      fonts: [
+        {
+          name: 'Noto Sans JP',
+          data: await font('Noto+Sans+JP:wght@700'),
+          weight: 700,
+        },
+        {
+          name: 'Noto Sans JP',
+          data: await font('Noto+Sans+JP:wght@400'),
+          weight: 400,
+        },
+      ],
     },
   );
 
@@ -77,7 +134,7 @@ export class Ogp {
 
         const source = await image({
           title: frontmatter.title,
-          date: frontmatter.date,
+          site: config.site.title,
         });
 
         const referenceId = this.emitFile({
