@@ -3,6 +3,7 @@ import { ImageResponse } from '@vercel/og';
 import { type Plugin } from 'vite';
 import {
   createMarkdownRenderer,
+  DefaultTheme,
   HeadConfig,
   TransformContext,
   type SiteConfig,
@@ -34,7 +35,21 @@ const font = async (query: string) => {
   return arrayBuffer;
 };
 
-const image = async ({ title, site }: { title: string; site: string }) => {
+const image = async ({
+  title,
+  date: raw,
+  avatar,
+  author,
+}: {
+  title: string;
+  date: string;
+  author: string;
+  avatar: string;
+}) => {
+  const date = new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'long',
+  }).format(new Date(raw));
+
   const response = new ImageResponse(
     {
       type: 'div',
@@ -64,11 +79,41 @@ const image = async ({ title, site }: { title: string; site: string }) => {
           {
             type: 'div',
             props: {
-              children: site,
               style: {
-                fontSize: '48px',
-                color: '#64748b',
+                fontSize: '40px',
+                display: 'flex',
+                gap: '20px',
+                alignItems: 'center',
+                width: '100%',
               },
+              children: [
+                {
+                  type: 'img',
+                  props: {
+                    src: avatar,
+                    width: 60,
+                    height: 60,
+                    style: {
+                      borderRadius: '50%',
+                    },
+                  },
+                },
+                {
+                  type: 'div',
+                  props: {
+                    children: author,
+                  },
+                },
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      color: '#64748b',
+                    },
+                    children: date,
+                  },
+                },
+              ],
             },
           },
         ],
@@ -114,7 +159,8 @@ export class Ogp {
           return null;
         }
 
-        const config: SiteConfig = (global as any).VITEPRESS_CONFIG;
+        const config: SiteConfig<DefaultTheme.Config> = (global as any)
+          .VITEPRESS_CONFIG;
         const md = await createMarkdownRenderer(
           config.srcDir,
           config.markdown,
@@ -134,7 +180,9 @@ export class Ogp {
 
         const source = await image({
           title: frontmatter.title,
-          site: config.site.title,
+          date: frontmatter.date,
+          author: config.site.themeConfig.author,
+          avatar: config.site.themeConfig.avatar,
         });
 
         const referenceId = this.emitFile({

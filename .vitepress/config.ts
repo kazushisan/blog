@@ -2,6 +2,9 @@ import footnote from 'markdown-it-footnote';
 import { defineConfig, VitePressData } from 'vitepress';
 import { Ogp } from './ogp';
 import { editHistory } from './editHistory';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
 const baseUrl = 'https://gadgetlunatic.com';
@@ -15,11 +18,17 @@ declare module 'vitepress' {
       repositoryUrl: string;
       baseUrl: string;
       x: string;
+      author: string;
+      avatar: string;
     }
   }
 
   function useData<T = DefaultTheme.Config>(): VitePressData<T>;
 }
+
+const avatar = (
+  await readFile(resolve(dirname(fileURLToPath(import.meta.url)), 'avatar.jpg'))
+).toString('base64');
 
 export default defineConfig({
   title: 'gadgetlunatic',
@@ -28,6 +37,8 @@ export default defineConfig({
     repositoryUrl,
     baseUrl,
     x: 'kazushikonosu',
+    author: 'Kazushi Konosu',
+    avatar: `data:image/jpeg;base64,${avatar}`,
   },
   markdown: {
     math: true,

@@ -3,6 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { normalizePath } from 'vite';
 import { createMarkdownRenderer, LoaderModule, SiteConfig } from 'vitepress';
+import { DefaultTheme } from 'vitepress';
 
 type Post = {
   title: string;
@@ -19,7 +20,8 @@ export { data };
 
 const cache = new Map<string, { data: Data; timestamp: number }>();
 
-const config: SiteConfig = (global as any).VITEPRESS_CONFIG;
+const config: SiteConfig<DefaultTheme.Config> = (global as any)
+  .VITEPRESS_CONFIG;
 
 if (!config) {
   throw new Error();
