@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.prose :where(h1, h2, h3, h4, h5, h6):hover .header-anchor:before {
+  content: '#';
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+  font-weight: 400;
+  color: #e2e8f0;
+  position: absolute;
+  left: 0;
+}
+
+.prose [class^='language-'] {
+  position: relative;
+}
+
+.prose [class^='language-'] .copy {
+  display: none;
+}
+
+.prose [class^='language-'] .lang {
+  position: absolute;
+  inset: 4px 10px auto auto;
+  font-size: 0.75em;
+  color: #616e88;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+}
