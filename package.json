@@ -1,8 +1,7 @@
 {
-  "name": "gadgetlunatic",
-  "version": "0.0.1",
+  "name": "kazushikonosu.io",
   "description": "Personal blog of Kazushi Konosu",
-  "main": "index.js",
+  "author": "Kazushi Konosu",
   "type": "module",
   "scripts": {
     "lint": "eslint",
@@ -11,8 +10,6 @@
     "preview": "vitepress preview",
     "check": "vue-tsc"
   },
-  "author": "Kazushi Konosu",
-  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@tailwindcss/typography": "^0.5.15",
@@ -35,5 +32,6 @@
   },
   "dependencies": {
     "vue": "^3.5.13"
-  }
+  },
+  "license": "MIT"
 }
