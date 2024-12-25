@@ -228,6 +228,13 @@ export class Ogp {
       [
         'meta',
         {
+          property: 'og:description',
+          content: context.description,
+        },
+      ],
+      [
+        'meta',
+        {
           property: 'og:url',
           content: url,
         },
