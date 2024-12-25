@@ -80,9 +80,9 @@ const image = async ({
             type: 'div',
             props: {
               style: {
-                fontSize: '40px',
+                fontSize: '48px',
                 display: 'flex',
-                gap: '20px',
+                gap: '24px',
                 alignItems: 'center',
                 width: '100%',
               },
@@ -91,10 +91,11 @@ const image = async ({
                   type: 'img',
                   props: {
                     src: avatar,
-                    width: 60,
-                    height: 60,
+                    width: 120,
+                    height: 120,
                     style: {
                       borderRadius: '50%',
+                      marginRight: '24px',
                     },
                   },
                 },
