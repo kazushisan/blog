@@ -77,7 +77,7 @@ sudo cp bin/scipampl /usr/local/bin/
 
 ## Pyomo のインストール
 
-[Poetry を使ってPythonの依存をきちんと管理したい](https://gadgetlunatic.com/post/setup-a-python-project/#poetry%E3%81%A7%E4%BE%9D%E5%AD%98%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B)ので、以下ではPoetryプロジェクトを作成して話を進めますが、特に気にしなければ
+[Poetry を使ってPythonの依存をきちんと管理したい](./setup-a-python-project#poetry%E3%81%A7%E4%BE%9D%E5%AD%98%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B)ので、以下ではPoetryプロジェクトを作成して話を進めますが、特に気にしなければ
 
 ```bash
 pip install pyomo
@@ -96,7 +96,7 @@ poetry add pyomo ## pyomo の追加
 
 ## 最適化問題を解いてみる
 
-[Gurobiを使った例](https://gadgetlunatic.com/post/install-gurobi-on-mac/#%E8%A9%A6%E3%81%97%E3%81%AB%E7%B0%A1%E5%8D%98%E3%81%AA%E6%9C%80%E9%81%A9%E5%8C%96%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E3%81%8F)と同様に、久保 幹雄、ジョア・ペドロ・ペドロソ、村松 正和、アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より、1章2節の線形計画問題を解いてみます。
+[Gurobiを使った例](./install-gurobi-on-mac#%E8%A9%A6%E3%81%97%E3%81%AB%E7%B0%A1%E5%8D%98%E3%81%AA%E6%9C%80%E9%81%A9%E5%8C%96%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E3%81%8F)と同様に、久保 幹雄、ジョア・ペドロ・ペドロソ、村松 正和、アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より、1章2節の線形計画問題を解いてみます。
 
 $$
 \begin{array}{crc}
