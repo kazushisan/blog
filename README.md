@@ -1,1 +1,1 @@
-# gadgetlunatic
+# kazushisan/blog
