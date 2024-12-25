@@ -6,7 +6,7 @@ import pluginVueTs from '@vue/eslint-config-typescript';
 
 export default tseslint.config(
   {
-    ignores: ['dist', '.vitepress/cache'],
+    ignores: ['**/dist', '.vitepress/cache'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
