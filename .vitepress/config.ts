@@ -6,8 +6,8 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
-const repositoryUrl = 'https://github.com/kazushisan/gadgetlunatic';
-const baseUrl = 'https://gadgetlunatic.com';
+const repositoryUrl = 'https://github.com/kazushisan/blog';
+const baseUrl = 'https://kazushikonosu.io';
 
 const ogp = new Ogp({ baseUrl });
 
@@ -31,7 +31,7 @@ const avatar = (
 ).toString('base64');
 
 export default defineConfig({
-  title: 'gadgetlunatic',
+  title: 'kazushikonosu.io',
   description: 'Personal blog of Kazushi Konosu',
   themeConfig: {
     repositoryUrl,
