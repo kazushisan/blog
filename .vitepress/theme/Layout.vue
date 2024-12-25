@@ -38,7 +38,7 @@ const repositoryLabel = computed(() => {
     </header>
     <div
       v-if="page.isNotFound"
-      className="container md:mx-auto max-w-4xl box-content xl:pr-72"
+      class="container md:mx-auto max-w-4xl box-content xl:pr-72"
     >
       <div class="p-4 text-lg">404 Page Not Found</div>
     </div>
