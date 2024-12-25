@@ -20,7 +20,7 @@ const formatDate = (raw: string) =>
     <template v-if="permalink && hash">
       <span className="before:content-['·'] before:px-1">latest commit </span>
       <a
-        className="bg-slate-50 inline- text-sm text-slate-700 inline-block border-slate-200 border rounded-sm px-1 font-mono ml-1 align-top"
+        className="bg-slate-50 text-sm text-slate-700 inline-block border-slate-200 border rounded-sm px-1 font-mono ml-1 align-top"
         :href="permalink"
       >
         {{ hash.slice(0, 7) }}
