@@ -58,7 +58,7 @@ const image = async ({
           width: '100%',
           height: '100%',
           boxSizing: 'border-box',
-          padding: '48px',
+          padding: '48px 48px 80px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
