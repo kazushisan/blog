@@ -71,7 +71,7 @@ export default defineConfig({
   lang: 'ja-JP',
   transformPageData(pageData, context) {
     let path = `${pageData.relativePath}`
-      .replace(/\/index\.md$/, '')
+      .replace(/\/?index\.md$/, '')
       .replace(/\.md$/, context.siteConfig.cleanUrls ? '' : '.html');
 
     if (path === 'ja') {
