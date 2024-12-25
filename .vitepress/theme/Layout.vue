@@ -3,9 +3,14 @@ import { useData } from 'vitepress';
 import Home from './Home.vue';
 import Post from './Post.vue';
 import { useLocale } from './locale';
+import { computed } from 'vue';
 
-const { site, frontmatter, page } = useData();
+const { site, frontmatter, page, theme } = useData();
 const locale = useLocale();
+const repositoryLabel = computed(() => {
+  const url = new URL(theme.value.repositoryUrl);
+  return `${url.hostname}${url.pathname}`;
+});
 </script>
 
 <template>
@@ -49,8 +54,8 @@ const locale = useLocale();
           <div>
             <h3 class="font-bold text-lg">{{ site.title }}</h3>
             <p>
-              <a href="https://github.com/kazushisan/gadgetlunatic">
-                github.com/kazushisan/gadgetlunatic
+              <a :href="theme.repositoryUrl">
+                {{ repositoryLabel }}
               </a>
             </p>
           </div>
@@ -59,9 +64,9 @@ const locale = useLocale();
               © 2024
               <a
                 class="text-blue-500 hover:text-blue"
-                href="https://x.com/kazushikonosu"
+                :href="`https://x.com/${theme.x}`"
               >
-                @kazushikonosu
+                @{{ theme.x }}
               </a>
             </p>
           </div>

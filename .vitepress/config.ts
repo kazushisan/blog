@@ -1,5 +1,5 @@
 import footnote from 'markdown-it-footnote';
-import { defineConfig } from 'vitepress';
+import { defineConfig, VitePressData } from 'vitepress';
 import { Ogp } from './ogp';
 import { editHistory } from './editHistory';
 
@@ -8,9 +8,27 @@ const baseUrl = 'https://gadgetlunatic.com';
 
 const ogp = new Ogp({ baseUrl });
 
+declare module 'vitepress' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace DefaultTheme {
+    interface Config {
+      repositoryUrl: string;
+      baseUrl: string;
+      x: string;
+    }
+  }
+
+  function useData<T = DefaultTheme.Config>(): VitePressData<T>;
+}
+
 export default defineConfig({
   title: 'gadgetlunatic',
   description: 'Personal blog of Kazushi Konosu',
+  themeConfig: {
+    repositoryUrl,
+    baseUrl,
+    x: 'kazushikonosu',
+  },
   markdown: {
     math: true,
     headers: true,
