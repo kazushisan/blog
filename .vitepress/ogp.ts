@@ -80,9 +80,9 @@ const image = async ({
             type: 'div',
             props: {
               style: {
-                fontSize: '48px',
+                fontSize: '40px',
                 display: 'flex',
-                gap: '24px',
+                gap: '20px',
                 alignItems: 'center',
                 width: '100%',
               },
@@ -95,7 +95,7 @@ const image = async ({
                     height: 120,
                     style: {
                       borderRadius: '50%',
-                      marginRight: '24px',
+                      marginRight: '12px',
                     },
                   },
                 },
