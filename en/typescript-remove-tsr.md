@@ -40,7 +40,7 @@ export function g() {
 
 In a small project with just two files, it's obvious that `g()` is unused. However, as the project grows in size, the dependency graph of modules will become exponentially complex.
 
-Unused `export`s can be identified by checking on each declaration in each file step-by-step using VSCode's TypeScript integration. However the real challenge is when these exports and imports form a dependency graph that is not connected to the dependency graph that is traceable from the entry point. In such cases, removing dead code is almost impossible to execute manually.
+Unused `export`s can be identified by checking on each declaration in each file step-by-step using VSCode's TypeScript integration. However the real challenge is when these exports and imports form a dependency graph that is not connected to the dependency graph which is traceable from the entry point. In such cases, removing dead code is almost impossible to execute manually.
 
 Modern bundlers like Vite use static analysis methods on your codebase to perform tree-shaking, excluding unreachable code from the generated bundle. While there's much attention towards not including dead code in the generated bundle, that is not the case for removing unused code in your source files.
 
@@ -48,17 +48,17 @@ Modern bundlers like Vite use static analysis methods on your codebase to perfor
 
 TypeScript Remove (tsr) is a tool that addresses this issue. It will detect and remove unused code automatically from your project. Notable features include:
 
-- Accuracy: tsr includes custom logic to analyze usage of exports rather than depending on `ts.LanguageSerivce.findReferences` as seen in other tools. It avoids the necessity of multiple hacks and workarounds required to bypass the limitations such as handling `export * from './foo';` correctly.
-- Performance: tsr can handle large-scale projects like `vuejs/core` fast. Benchmarks show that the execution take around 700ms for `vuejs/core` on a Mac mini (2024).
-- Minimal Design: tsr is zero-config and uses `tsconfig.json` to detect the scope of the project and resolve import statements. If your project passes type checking with `tsc`, tsr will work; If type checking fails, tsr will not give the expected results.
+- Accuracy: tsr utilizes custom logic to analyze usage of exports rather than depending on `ts.LanguageSerivce.findReferences` as seen in other tools. It avoids the necessity of multiple hacks and workarounds required to bypass the limitations. For example, handling `export * from './foo';` correctly requires many hacks if you try to implement a tool with TypeScript's internal API.
+- Performance: tsr can handle large-scale projects fast. Benchmarks show that the execution will take around 700ms for `vuejs/core` on a Mac mini (2024).
+- Minimal Design: tsr is zero-config and uses `tsconfig.json`. Detecting the scope of the project and the module resolution behavior is controlled by `tsconfig.json`, making tsr simple while also being predictable. If your project passes type checking with `tsc`, tsr will work; If type checking fails, tsr will not give the expected results.
 
 Here are some scenarios where tsr might be useful:
 
 - Detecting the current state of dead code in your TypeScript project
 - Executing tsr before creating a Pull-Request to remove unused code that you may have added when implementing a feature
-- Adding tsr to your CI pipeline to ensure that unused code will not be merged in to your main branch.
+- Adding tsr to your CI pipeline to ensure that unused code will not be merged in to your main branch
 
-and so on...
+and so on!
 
 The following sections will cover how to use tsr by applying it to an example, the `vuejs/core` repository.[^vue]
 
