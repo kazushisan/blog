@@ -7,10 +7,10 @@ const { frontmatter } = useData();
 </script>
 <template>
   <div class="xl:flex xl:justify-center">
-    <div class="container md:mx-auto xl:mx-0 max-w-4xl box-content flex-none">
+    <div class="container md:mx-auto xl:mx-0 max-w-2xl box-content flex-none">
       <div class="px-4">
         <header>
-          <h1 class="font-bold text-3xl my-8">{{ frontmatter.title }}</h1>
+          <h1 class="font-bold text-2xl my-8">{{ frontmatter.title }}</h1>
           <div class="my-8">
             <PostMetaData
               :date="frontmatter.date"
