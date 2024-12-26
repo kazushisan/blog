@@ -29,3 +29,16 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 }
+
+.prose img {
+  margin: 0 auto;
+}
+
+.prose div > mjx-container svg {
+  margin: 0 auto;
+}
+
+.prose p mjx-container {
+  display: inline-block;
+  vertical-align: middle;
+}

@@ -14,7 +14,10 @@ const formatDate = (raw: string) =>
 <template>
   <div class="text-sm text-slate-500 items-center">
     <span>{{ formatDate(date) }}</span>
-    <span v-if="modifiedDate" class="before:content-['·'] before:px-1">
+    <span
+      v-if="modifiedDate && formatDate(date) !== formatDate(modifiedDate)"
+      class="before:content-['·'] before:px-1"
+    >
       last updated {{ formatDate(modifiedDate) }}
     </span>
     <template v-if="permalink && hash">

@@ -10,7 +10,7 @@ const posts = computed(() => data[locale.value]);
 
 <template>
   <div class="xl:flex xl:justify-center">
-    <div class="container md:mx-auto xl:mx-0 max-w-4xl flex-1 min-w-0">
+    <div class="container sm:mx-auto xl:mx-0 max-w-2xl flex-1 min-w-0">
       <div class="px-4">
         <div
           v-for="post in posts"

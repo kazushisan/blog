@@ -1,5 +1,5 @@
 declare module '@vercel/og' {
-  declare type ImageResponseOptions = ConstructorParameters<
+  type ImageResponseOptions = ConstructorParameters<
     typeof import('../node_modules/@vercel/og').ImageResponse
   >[1];
 

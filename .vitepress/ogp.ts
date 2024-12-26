@@ -82,7 +82,6 @@ const image = async ({
               style: {
                 fontSize: '40px',
                 display: 'flex',
-                gap: '20px',
                 alignItems: 'center',
                 width: '100%',
               },
@@ -95,7 +94,6 @@ const image = async ({
                     height: 120,
                     style: {
                       borderRadius: '50%',
-                      marginRight: '12px',
                     },
                   },
                 },
@@ -103,6 +101,9 @@ const image = async ({
                   type: 'div',
                   props: {
                     children: author,
+                    style: {
+                      marginLeft: '32px',
+                    },
                   },
                 },
                 {
@@ -110,6 +111,7 @@ const image = async ({
                   props: {
                     style: {
                       color: '#64748b',
+                      marginLeft: '20px',
                     },
                     children: date,
                   },

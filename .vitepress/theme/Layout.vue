@@ -17,7 +17,7 @@ const repositoryLabel = computed(() => {
   <div>
     <header>
       <div
-        :class="`container md:mx-auto max-w-4xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
+        :class="`container sm:mx-auto max-w-2xl box-content ${frontmatter.home ? '' : 'xl:pr-72'}`"
       >
         <div class="p-4 flex justify-start items-center">
           <a :href="`/${locale}`">
@@ -38,7 +38,7 @@ const repositoryLabel = computed(() => {
     </header>
     <div
       v-if="page.isNotFound"
-      class="container md:mx-auto max-w-4xl box-content xl:pr-72"
+      class="container sm:mx-auto max-w-2xl box-content xl:pr-72"
     >
       <div class="p-4 text-lg">404 Page Not Found</div>
     </div>
@@ -46,7 +46,7 @@ const repositoryLabel = computed(() => {
     <Post v-else />
     <footer>
       <div
-        :class="`container md:mx-auto max-w-4xl box-content py-16 ${
+        :class="`container sm:mx-auto max-w-2xl box-content py-16 ${
           frontmatter.home ? '' : 'xl:pr-72'
         }`"
       >
