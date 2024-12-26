@@ -54,7 +54,6 @@ export default defineConfig({
   },
   scrollOffset: 24,
   cleanUrls: true,
-  srcExclude: ['README.md'],
   transformHead(context) {
     return ogp.tags(context);
   },
