@@ -7,7 +7,7 @@ const { frontmatter } = useData();
 </script>
 <template>
   <div class="xl:flex xl:justify-center">
-    <div class="container md:mx-auto xl:mx-0 max-w-2xl box-content flex-none">
+    <div class="container sm:mx-auto xl:mx-0 max-w-2xl box-content flex-none">
       <div class="px-4">
         <header>
           <h1 class="font-bold text-2xl my-8">{{ frontmatter.title }}</h1>
