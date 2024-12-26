@@ -1,1 +1,0 @@
-# kazushisan/blog
