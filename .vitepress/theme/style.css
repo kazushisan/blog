@@ -33,3 +33,12 @@
 .prose img {
   margin: 0 auto;
 }
+
+.prose div > mjx-container svg {
+  margin: 0 auto;
+}
+
+.prose p mjx-container {
+  display: inline-block;
+  vertical-align: middle;
+}
