@@ -11,7 +11,7 @@ It's important to remove unused code as it results in increased cognitive load w
 
 Increase of unused code is a common issue seen across large-scale projects. However, the task of removing unused code is quite tedious. TypeScript Remove (tsr) is a command line tool that helps you to remove unused code by detecting unused code and automatically editing source files.
 
-https://github.com/line/tsr
+https://github.com/tsrorg/tsr
 
 ## The problem
 
@@ -165,4 +165,4 @@ With TypeScript Remove (tsr), removing dead code for your TypeScript project bec
 
 If you like this tool, please consider giving the project a star on Github. ⭐️ Happy hacking!
 
-https://github.com/line/tsr
+https://github.com/tsrorg/tsr
