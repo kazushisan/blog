@@ -61,7 +61,7 @@ const repositoryLabel = computed(() => {
           </div>
           <div class="mt-4">
             <p>
-              © 2024
+              © 2026
               <a
                 class="text-blue-500 hover:text-blue"
                 :href="`https://x.com/${theme.x}`"
